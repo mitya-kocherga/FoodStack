@@ -1,4 +1,3 @@
-// import React from 'react'
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -15,8 +14,8 @@ import {
     changeSelectorSecondAction,
     addSelectorAction,
     addSecondSelectorAction,
-    sel,
-    sec,
+    firstCouresSelectors,
+    secondCouresSelectors,
 } from '../course';
 
 
@@ -25,8 +24,8 @@ const mapStateToProps = createStructuredSelector({
     SecondCourse,
     mainCourse,
     secondCourse,
-    sel,
-    sec
+    firstCouresSelectors,
+    secondCouresSelectors
   });
 
   function mapDispatchToProps(dispatch) {

@@ -1,8 +1,8 @@
 import { handleActions } from "redux-actions";
 
-import { firstSelectorConstructor} from "./firstSelectorConstructor";
-import { secondSelectorConstructor} from "./secondSelectorConstructor";
-import { Course} from "./Course";
+import { firstSelectorConstructor} from "./Constructors/firstSelectorConstructor";
+import { secondSelectorConstructor} from "./Constructors/secondSelectorConstructor";
+import { Course} from "./Constructors/Course";
 import { changeSelectorAction, changeSelectorSecondAction, addSelectorAction, addSecondSelectorAction } from "../course"
 
 const changeSelectorActionHandler = (state, { payload }) => {

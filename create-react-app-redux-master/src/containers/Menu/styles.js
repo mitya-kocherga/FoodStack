@@ -10,4 +10,4 @@ export const styles = theme => ({
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
   },
-  });
+});

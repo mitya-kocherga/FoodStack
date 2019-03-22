@@ -12,31 +12,32 @@ import Button from "@material-ui/core/Button";
 import Grid from '@material-ui/core/Grid';
 
 
-class Menu extends Component {
-changeHandler( e ,index) {
-    e.stopPropagation();
-    e.preventDefault()
-    this.props.actions.changeSelectorAction({
-        id: index,
-        value: e.target.value,
-    })
-}
+export default class Menu extends Component {
+    changeHandler( e ,index) {
+        e.stopPropagation();
+        e.preventDefault()
+        this.props.actions.changeSelectorAction({
+            id: index,
+            value: e.target.value,
+        })
+    }
 
-changeSecondHandler( e ,index) {
-    e.stopPropagation();
-    e.preventDefault()
-    this.props.actions.changeSelectorSecondAction({
-        id: index,
-        value: e.target.value,
-    })
-}
+    changeSecondHandler( e ,index) {
+        e.stopPropagation();
+        e.preventDefault()
+        this.props.actions.changeSelectorSecondAction({
+            id: index,
+            value: e.target.value,
+        })
+    }
     
     render() {
-        const { classes, SecondCourse, sel,sec } = this.props;
+        const { classes, SecondCourse, firstCouresSelectors, secondCouresSelectors } = this.props;
         const { dataSelectionMainDishes, } = this.props.mainCourse;
-          const { dataSelectionSecondDishes, } = this.props.secondCourse;
-     const { addSecondSelectorAction, addSelectorAction } = this.props.actions;
-    return (
+        const { dataSelectionSecondDishes, } = this.props.secondCourse;
+        const { addSecondSelectorAction, addSelectorAction } = this.props.actions;
+        
+        return (
             <Paper className={classes.root} elevation={1}>
                     <h1>Menu</h1>
                     <p>Do you want to order food?</p>
@@ -49,10 +50,10 @@ changeSecondHandler( e ,index) {
                     </TableHead>
                     <TableBody>
                         <TableRow>
-                            <TableCell component="th" scope="row" align="centre">Main Course</TableCell>
-                            <TableCell align="centre">
+                            <TableCell component="th" scope="row" align="center">Main Course</TableCell>
+                            <TableCell align="center">
                                 {
-                                sel.map( (item, index) => (
+                                firstCouresSelectors.map( (item, index) => (
                                     <FormControl className={classes.formControl}>
                                         <Select key={index}
                                             value={item.value}
@@ -69,23 +70,23 @@ changeSecondHandler( e ,index) {
                                         </Select>))
                                     </FormControl>
                                 ))}
-                                    <Grid item> 
-                                        <Button
-                                        color="secondary"
-                                        variant="contained"
-                                        onClick={() => addSelectorAction()}
-                                        >
-                                            Add row
-                                        </Button>
+                                <Grid item> 
+                                    <Button
+                                    color="secondary"
+                                    variant="contained"
+                                    onClick={() => addSelectorAction()}
+                                    >
+                                        Add row
+                                    </Button>
                                 </Grid> 
-                                </TableCell>
+                            </TableCell>
                         </TableRow>
 
                         <TableRow>
-                            <TableCell component="th" scope="row" align="centre">The Second Course</TableCell>
-                            <TableCell align="centre">
+                            <TableCell component="th" scope="row" align="center">The Second Course</TableCell>
+                            <TableCell align="center">
                             {
-                                sec.map( (item, index) => (
+                                secondCouresSelectors.map( (item, index) => (
                                     <FormControl className={classes.formControl}>
                                         <Select key={index}
                                             value={item.value}
@@ -103,22 +104,19 @@ changeSecondHandler( e ,index) {
                                     </FormControl>
                                 ))}
                                     <Grid item> 
-                                            <Button
-                                                color="secondary"
-                                                variant="contained"
-                                                onClick={() => addSecondSelectorAction()}
-                                                >
-                                                Add row
-                                            </Button>
-                                        </Grid> 
-
-                            
+                                        <Button
+                                            color="secondary"
+                                            variant="contained"
+                                            onClick={() => addSecondSelectorAction()}
+                                            >
+                                            Add row
+                                        </Button>
+                                    </Grid> 
                             </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             </Paper>   
-    )
-  }
+        )
+    }
 }
-export default Menu;

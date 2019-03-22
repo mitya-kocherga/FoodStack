@@ -1,35 +1,42 @@
 import React, { Component }  from 'react'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper';
 
-class ListOrder extends Component {
+export default class ListOrder extends Component {
 
-    render() {
-        const { count, increment, incrementAsync, isIncrementing, decrement, decrementAsync, isDecrementing, changePage } = this.props;
+  render() {
+    const { classes } = this.props;
+    
     return (
-        <div>
+      <Paper className={classes.root}>
         <h1>Home</h1>
-        <p>Count: {count} </p>
-    
-        <p>
-          <button onClick={increment}>Increment</button>
-          <button onClick={incrementAsync} disabled={isIncrementing}>
-            Increment Async
-          </button>
-        </p>
-    
-        <p>
-          <button onClick={decrement}>Decrement</button>
-          <button onClick={decrementAsync} disabled={isDecrementing}>
-            Decrement Async
-          </button>
-        </p>
-    
-        <p>
-          <button onClick={() => changePage()}>
-            Go to about page via redux
-          </button>
-        </p>
-      </div>
-    )
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell align="centre">Who</TableCell>
+              <TableCell align="centre">What</TableCell>
+          </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+                <TableCell component="th" scope="row" align="centre">Паша</TableCell>
+                <TableCell component="th" scope="row" align="centre">Борщ</TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell component="th" scope="row" align="centre">Паша</TableCell>
+                <TableCell component="th" scope="row" align="centre">Борщ</TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell component="th" scope="row" align="centre">Паша</TableCell>
+                <TableCell component="th" scope="row" align="centre">Борщ</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </Paper>
+      )
   }
 }
-export default ListOrder;

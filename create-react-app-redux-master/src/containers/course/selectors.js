@@ -8,7 +8,7 @@ export const FirstCourse = createSelector(
   );
 export const SecondCourse = createSelector(
     baseState,
-    state => state.secondcourse
+    state => state.secondCourses
   );
   export const mainCourse = createSelector(
     baseState,
@@ -18,11 +18,11 @@ export const SecondCourse = createSelector(
     baseState,
     state => state.secondCourse
   );
-  export const sel = createSelector(
+  export const firstCouresSelectors = createSelector(
     FirstCourse,
     state => state.selectors
   );
-  export const sec = createSelector(
+  export const secondCouresSelectors = createSelector(
     SecondCourse,
     state => state.selectors
   );
