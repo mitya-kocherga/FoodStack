@@ -6,6 +6,14 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var mongoose = require('mongoose');
+
+var mongoDB = 'mongodb://127.0.0.1/my_database';
+mongoose.connect(mongoDB, { useNewUrlParser: true }) //Set up default mongoose connection
+
+var db = mongoose.connection;  //Get the default connection
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));//Bind connection to error event (to get notification of connection errors)
 
 var app = express();
 
