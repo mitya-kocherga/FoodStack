@@ -16,7 +16,7 @@ import {
     addSecondSelectorAction,
     firstCouresSelectors,
     secondCouresSelectors,
-} from '../course';
+} from '../../Store/course';
 
 
 const mapStateToProps = createStructuredSelector({
