@@ -4,7 +4,6 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from './store'
 import App from './Components/app'
-import Login from './Components/Login'
 
 import 'sanitize.css/sanitize.css'
 import './index.css'
@@ -16,7 +15,6 @@ render(
     <ConnectedRouter history={history}>
       <div>
         {
-        true ? <Login /> :
         <App />
         }
       </div>

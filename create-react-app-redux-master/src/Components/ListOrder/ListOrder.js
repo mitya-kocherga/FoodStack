@@ -7,6 +7,17 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper';
 
 export default class ListOrder extends Component {
+  state = {
+    orders: []
+  }
+
+  componentDidMount() {
+    fetch('/orders/')
+      .then(res => res.json())
+      .then(orders => this.setState({ orders }))
+      .catch(error => console.error(error));
+  }
+
 
   render() {
     const { classes } = this.props;
@@ -22,18 +33,12 @@ export default class ListOrder extends Component {
           </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-                <TableCell component="th" scope="row" align="centre">Паша</TableCell>
-                <TableCell component="th" scope="row" align="centre">Борщ</TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell component="th" scope="row" align="centre">Паша</TableCell>
-                <TableCell component="th" scope="row" align="centre">Борщ</TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell component="th" scope="row" align="centre">Паша</TableCell>
-                <TableCell component="th" scope="row" align="centre">Борщ</TableCell>
-            </TableRow>
+            {this.state.orders.map( order => (
+              <TableRow>
+                <TableCell component="th" scope="row" align="centre">{order.userName}</TableCell>
+                <TableCell component="th" scope="row" align="centre">{order.choice}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </Paper>

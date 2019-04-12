@@ -1,28 +1,48 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Route, Link } from 'react-router-dom'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import { createStructuredSelector } from "reselect";
+import { connect } from "react-redux";
+
+import Login from '../Login'
 import ListOrder from '../ListOrder'
 import Menu from '../Menu'
 import { styles } from './styles'
-import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles'
+import { isLogin } from '../../Store/Auth'
+//import { render } from 'react-dom';
 
-const App = ({ classes }) => (
-  <div>
-    <header className={classes.headerAll}>
-      <Typography variant="inherit" className={classes.headerMenu}>
-        <Link to="/">ListOrder</Link>
-      </Typography>
-      
-      <Typography variant="inherit" className={classes.headerMenu}>
-        <Link to="/Menu-us">Menu</Link>
-      </Typography>
-    </header>
+class App extends React.Component {
 
-    <main className={classes.main}>
-      <Route exact path="/" component={ListOrder} />
-      <Route exact path="/Menu-us" component={Menu} />
-    </main>
-  </div>
-)
+  render() {
+    const { classes, isLogin } = this.props;
+    return (
+        <div>
+        { !isLogin ? <Login /> :
+        (
+          <Fragment>
+            <header className={classes.headerAll}>
+              <Typography variant="inherit" className={classes.headerMenu}>
+                <Link to="/">ListOrder</Link>
+              </Typography>
+              
+              <Typography variant="inherit" className={classes.headerMenu}>
+                <Link to="/Menu-us">Menu</Link>
+              </Typography>
+            </header>
 
-export default (withStyles(styles, { withTheme: true })(App))
+            <main className={classes.main}>
+              <Route exact path="/" component={ListOrder} />
+              <Route exact path="/Menu-us" component={Menu} />
+            </main>
+        </Fragment>
+        )}
+      </div>
+    )
+  }
+}
+const mapStatetoProps = createStructuredSelector({
+  isLogin
+});
+
+export default  connect(mapStatetoProps)(withStyles(styles, { withTheme: true })(App))

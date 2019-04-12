@@ -5,5 +5,9 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get('/orderss', function(req, res, next) {
+  res.json([{userName: 'Васян про', choice: 'топовый хохлятский борщ со смэтанкою'}, {userName: 'DJ - igurda', choice: 'голубцы голубчики'}]);
+});
+
 
 module.exports = router;

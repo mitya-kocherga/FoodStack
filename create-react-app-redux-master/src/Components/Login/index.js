@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 
 import { styles } from "./styles";
 import Login from './Login';
+import { logIn } from "../../Store/Auth";
 
 
 const mapStateToProps = createStructuredSelector({
@@ -14,6 +15,7 @@ const mapStateToProps = createStructuredSelector({
     return {
       actions: bindActionCreators(
         {
+          logIn
         },
         dispatch
       ),

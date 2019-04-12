@@ -1,4 +1,4 @@
-import React, { Component }  from 'react'
+import React, { Component, Fragment }  from 'react'
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -30,6 +30,16 @@ export default class Menu extends Component {
             value: e.target.value,
         })
     }
+    comon(choice) {
+        fetch( 'orders/add-order', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify({ userName: 'WasyanPRRO$$$', choice})
+        }).catch(error => console.error(error));        
+    }
     
     render() {
         const { classes, SecondCourse, firstCouresSelectors, secondCouresSelectors } = this.props;
@@ -44,8 +54,8 @@ export default class Menu extends Component {
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="centre">Course</TableCell>
-                            <TableCell align="centre">Dishes</TableCell>
+                            <TableCell align="center">Course</TableCell>
+                            <TableCell align="center">Dishes</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -65,10 +75,21 @@ export default class Menu extends Component {
                                             >
                                             <MenuItem> choose </MenuItem>
                                             {dataSelectionMainDishes.map(item => (
-                                                <MenuItem key={item.key} value={item.name}>{item.name}</MenuItem>
+                                                <Fragment>
+                                                    <MenuItem key={item.key} value={item.name}>{item.name}</MenuItem>
+                                                    <Grid item> 
+                                                        <Button
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        onClick={() => this.comon( item.name )}
+                                                        >
+                                                            comon i want it!
+                                                        </Button>
+                                                    </Grid>
+                                                </Fragment>
                                                 ))}
                                         </Select>))
-                                    </FormControl>
+                                    </FormControl> 
                                 ))}
                                 <Grid item> 
                                     <Button
@@ -79,6 +100,7 @@ export default class Menu extends Component {
                                         Add row
                                     </Button>
                                 </Grid> 
+                                
                             </TableCell>
                         </TableRow>
 

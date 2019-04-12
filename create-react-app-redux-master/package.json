@@ -23,6 +23,7 @@
     "react-redux": "5.1.1",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
+    "react-select": "^2.4.2",
     "redux": "4.0.1",
     "redux-actions": "^2.6.5",
     "redux-thunk": "2.3.0",
@@ -30,6 +31,7 @@
     "sanitize.css": "7.0.3",
     "serve": "10.1.2"
   },
+  "proxy": "http://localhost:3002",
   "browserslist": [
     ">0.2%",
     "not dead",
