@@ -10,7 +10,7 @@ import ListOrder from '../ListOrder'
 import Menu from '../Menu'
 import { styles } from './styles'
 import { isLogin } from '../../Store/Auth'
-//import { render } from 'react-dom';
+import { withRouter } from 'react-router'
 
 class App extends React.Component {
 
@@ -45,4 +45,4 @@ const mapStatetoProps = createStructuredSelector({
   isLogin
 });
 
-export default  connect(mapStatetoProps)(withStyles(styles, { withTheme: true })(App))
+export default  withRouter(connect(mapStatetoProps)(withStyles(styles, { withTheme: true })(App)))

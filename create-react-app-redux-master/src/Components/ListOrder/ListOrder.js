@@ -12,10 +12,10 @@ export default class ListOrder extends Component {
   }
 
   componentDidMount() {
-    fetch('/orders/')
+    /*fetch('/orders/')
       .then(res => res.json())
       .then(orders => this.setState({ orders }))
-      .catch(error => console.error(error));
+      .catch(error => console.error(error));*/
   }
 
 
