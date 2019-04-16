@@ -30,8 +30,8 @@ exports.put_order = function(req, res) {
 };
 
 exports.delete_order = function(req, res) {
-    Order.remove({_id: req.query.id}, function (e, order) {
-        if (e) return res.status(400).send({auth: false, message: 'Object not found'});
-        return res.status(200).send({auth: true, message: 'Object successfully deleted'});
+    Order.findOneAndRemove({_id: req.body.id}, function (e, order) {
+        if (e) return res.status(400).send({message: 'Object not found'});
+        return res.status(200).send({message: 'Object successfully deleted'});
     })
 };
