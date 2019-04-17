@@ -6,6 +6,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
 
 export default class ListOrder extends Component {
   state = {
@@ -13,6 +14,10 @@ export default class ListOrder extends Component {
   }
 
   componentDidMount() {
+    /**запрос который загружает все заказы
+     * 
+     * для админки можно такой, но для обычного юзера нужно запрашивать с конкретным USERID
+     */
     fetch('/orders')
       .then(res => res.json())
       .then(orders => this.setState({ orders }))
@@ -34,11 +39,16 @@ export default class ListOrder extends Component {
           </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.orders.map( order => (
-              <TableRow>
+            {this.state.orders.map( (order, index) => (
+              <TableRow key={index}>
                 <TableCell component="th" scope="row" align="center">{order.userName}</TableCell>
-                <TableCell component="th" scope="row" align="center">{order.choice}</TableCell>
+                <TableCell component="th" scope="row" align="center">{order.choice.map( m => 
+                  <Typography>
+                    {m.value}
+                  </Typography>)
+                }</TableCell>
                 <TableCell component="th" scope="row" align="center"><Button onClick={ () => (
+                  /**это запрос для удаления конкретного заказа */
                   fetch('orders/remove-order',{
                     method: 'DELETE',
                     headers: {

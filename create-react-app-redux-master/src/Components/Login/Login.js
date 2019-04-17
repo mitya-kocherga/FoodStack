@@ -10,23 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-const suggestions = [
-  { label: 'Иннесса' },
-  { label: 'Дарья' },
-  { label: 'Евгений' },
-  { label: 'Никита' },
-  { label: 'Артур' },
-  { label: 'Артем' },
-  { label: 'Рома' },
-  { label: 'Вячеслав' },
-  { label: 'Влад' },
-  { label: 'Александр' },
-  { label: 'Станислав' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
-/**должно приходить из пропсов */
 
 function NoOptionsMessage(props) {
   return (
@@ -136,8 +119,14 @@ const components = {
 };
 
 export default class Login extends React.Component {
+
+  /** в логине используется автозаполнение, это его функции написаны выше.
+   * можно начать вводить имя юзера и оно отфильтрует запрос
+   * 
+   */
   state = {
     single: null,
+    suggestions: []
   };
 
   handleChange = name => value => {
@@ -146,7 +135,21 @@ export default class Login extends React.Component {
     });
   };
 
+  componentDidMount() {
+    /**запрос который возвращает всех юзеров */
+    fetch('/users')
+      .then(res => res.json())
+      .then(suggestions => this.setState({ suggestions }))
+      .catch(error => console.error(error));
+  }
+
   render() {
+    let { suggestions } = this.state; 
+
+    suggestions = suggestions.map(suggestion => ({
+      value: suggestion.userName,
+      label: suggestion.userName,
+    }));
     const { classes, theme } = this.props;
 
     const selectStyles = {
@@ -181,6 +184,24 @@ export default class Login extends React.Component {
                     onClick={()=>this.props.actions.logIn({ user: this.state.single })}
                     >
                         Sign in
+                    </Button>
+                </Grid>
+                <Grid item> 
+                    <Button
+                    color="primary"
+                    variant="text"
+                    onClick={() => fetch('users/add-user',{
+                        method: 'POST',
+                        headers: {
+                          'Accept': 'application/json, text/plain, */*',
+                          'Content-Type': 'application/json'
+                        },
+                        body : JSON.stringify({userName: 'LittleBo$$', isAdmin: false})
+                       }).catch(error => console.error(error))
+                       /**этот запрос добавляет юзера  */
+                    }
+                    >
+                        add user
                     </Button>
                 </Grid>
             </Grid>

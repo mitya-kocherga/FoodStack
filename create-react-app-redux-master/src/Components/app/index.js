@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import Login from '../Login'
 import ListOrder from '../ListOrder'
 import Menu from '../Menu'
+import Admin from '../Admin'
 import { styles } from './styles'
 import { isLogin } from '../../Store/Auth'
 import { withRouter } from 'react-router'
@@ -34,6 +35,7 @@ class App extends React.Component {
             <main className={classes.main}>
               <Route exact path="/" component={ListOrder} />
               <Route exact path="/Menu-us" component={Menu} />
+              <Route exact path="/Admin" component={Admin} />
             </main>
         </Fragment>
         )}

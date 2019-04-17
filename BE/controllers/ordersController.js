@@ -7,8 +7,8 @@ exports.all_orders = function(req, res) {
 };
 
 exports.post_order = function(req, res) {
-    new Order({ userName: req.body.userName, choice: req.body.choice }).save().then(r => {
-        res.status(201).send('Created');
+    new Order({ userName: req.body.userName, choice: req.body.choice, userID: req.body.userID }).save().then(r => {
+        res.status(201).send({message:'Created'});
     })
         .catch(err => {
             return res.status(400).send({auth: false, message: 'Data is empty'});

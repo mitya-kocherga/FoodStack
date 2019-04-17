@@ -6,13 +6,12 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const ordersRouter = require('./routes/orders');
+const usersRouter = require('./routes/users');
 const mongoose = require('mongoose');
 
 const mongoDB = 'mongodb://127.0.0.1/FoodStackDB';
 mongoose.connect(mongoDB, { useNewUrlParser: true }) //Set up default mongoose connection
 
-//require('./models/Users');
-//require('./config/passport');
 
 const db = mongoose.connection;  //Get the default connection
 
@@ -32,6 +31,7 @@ app.use(cookieParser());
 
 app.use('/', indexRouter);
 app.use('/orders', ordersRouter);
+app.use('/users', usersRouter);
 
 
 // catch 404 and forward to error handler

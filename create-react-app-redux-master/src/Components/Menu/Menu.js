@@ -13,6 +13,18 @@ import Grid from '@material-ui/core/Grid';
 
 
 export default class Menu extends Component {
+
+    componentDidMount() {
+        /**
+         * здесь долджен быть запрос который загружает меню на определенную дату
+         */
+
+       /* fetch('/orders')
+          .then(res => res.json())
+          .then(orders => this.setState({ orders }))
+          .catch(error => console.error(error));
+          */
+      }
     changeHandler( e ,index) {
         e.stopPropagation();
         e.preventDefault()
@@ -30,14 +42,14 @@ export default class Menu extends Component {
             value: e.target.value,
         })
     }
-    comon(choice) {
+    comon(choice) {//запрос для добавления заказа
         fetch( 'orders/add-order', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
             },
-            body : JSON.stringify({ userName: 'WasyanPRRO$$$', choice})
+            body : JSON.stringify({ userName: 'WasyanPRRO$$$', choice, userID: '5cb6de0241fe3b7eb59c5db2'})
         }).catch(error => console.error(error));        
     }
     
@@ -75,18 +87,7 @@ export default class Menu extends Component {
                                             >
                                             <MenuItem> choose </MenuItem>
                                             {dataSelectionMainDishes.map(item => (
-                                                <Fragment>
                                                     <MenuItem key={item.key} value={item.name}>{item.name}</MenuItem>
-                                                    <Grid item> 
-                                                        <Button
-                                                        color="secondary"
-                                                        variant="contained"
-                                                        onClick={() => this.comon( item.name )}
-                                                        >
-                                                            comon i want it!
-                                                        </Button>
-                                                    </Grid>
-                                                </Fragment>
                                                 ))}
                                         </Select>))
                                     </FormControl> 
@@ -138,6 +139,13 @@ export default class Menu extends Component {
                         </TableRow>
                     </TableBody>
                 </Table>
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    onClick={() => this.comon( firstCouresSelectors )}//запрос для добавления заказа
+                >
+                    comon i want it!
+                </Button>
             </Paper>   
         )
     }
