@@ -1,0 +1,25 @@
+{
+  "name": "FoodStack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "npm i --prefix server",
+    "install-client": "npm i --prefix client",
+    "server": "npm run devstart --prefix server",
+    "client": "npm start --prefix client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitya-kocherga/FoodStack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mitya-kocherga/FoodStack/issues"
+  },
+  "homepage": "https://github.com/mitya-kocherga/FoodStack#readme"
+}
+
