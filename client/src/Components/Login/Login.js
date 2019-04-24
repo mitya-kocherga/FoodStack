@@ -177,6 +177,18 @@ export default class Login extends React.Component {
                         isClearable
                     />
                 </Grid>
+                <Grid item className={classes.root}>
+                  <TextField
+                  id="outlined-password-input"
+                  label="Password"
+                  className={classes.textField}
+                  type="password"
+                  autoComplete="current-password"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={ e => this.setState({ password: e.target.value }) }
+                  />
+                </Grid>
                 <Grid item> 
                     <Button
                     color="secondary"
@@ -194,9 +206,9 @@ export default class Login extends React.Component {
                         method: 'POST',
                         headers: {
                           'Accept': 'application/json, text/plain, */*',
-                          'Content-Type': 'application/json'
+                          'Content-Type': 'application/json',
                         },
-                        body : JSON.stringify({userName: 'LittleBo$$', isAdmin: false})
+                        body : JSON.stringify({userName: 'LittleBo$$', isAdmin: false, password: this.state.password })
                        }).catch(error => console.error(error))
                        /**этот запрос добавляет юзера  */
                     }

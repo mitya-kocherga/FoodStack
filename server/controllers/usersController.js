@@ -1,4 +1,7 @@
 const User = require("../models/User");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 exports.all_users = function(req, res) {
     User.find({}, function (err, users) {
@@ -6,14 +9,44 @@ exports.all_users = function(req, res) {
     })
 };
 
-exports.add_user = function(req, res) {
-    console.log(req.body.userName)
-    new User({ userName: req.body.userName, isAdmin: req.body.isAdmin }).save().then(r => {
-        res.status(201).send({message:'Created'});
-    })
-        .catch(err => {
-            return res.status(400).send({message: 'Data is empty', error: err});
-        })
+exports.add_user = async function(req, res) {
+    const candidate = await User.findOne({userName: req.body.userName});
+    
+    if (candidate) { // Пользователь существует, нужно отдать ошибку
+        res.status(409).json({ message: 'This User Name exist!' })
+    } else {
+        const salt     = bcrypt.genSaltSync(10),
+              password = req.body.password;
+        const user = new User({ userName: req.body.userName, isAdmin: req.body.isAdmin, password: bcrypt.hashSync(password, salt) })
+        
+        user
+            .save()
+            .then(r => res.status(201).send({ message:' User created!' }))
+            .catch(err => res.status(400).send({message: 'Something went wrong', error: err}))
+    };
+};
+
+exports.login = async (req, res) => {
+    const candidate = await User.findOne({userName: req.body.userName});
+    
+    if (candidate) {// check pass
+        const passwordResult = bcrypt.compareSync(req.body.password, candidate.password);
+
+        if (passwordResult) {// generate token
+            const token = jwt.sign({
+                userName: candidate.userName,
+                userId: candidate._id,
+            }, 'secretkey', {expiresIn: 60 * 60});
+
+            res.status(200).json({ token: `Bearer ${token}` })
+
+        } else {// пароли не совпали
+        res.status(401).json({ message: 'password not sovpadat' })
+        }
+
+  } else {// user not found
+        res.status(404).json({ message: 'This User Name exist!' });
+  }
 };
 
 exports.delete_user = function(req, res) {
