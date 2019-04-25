@@ -3,6 +3,7 @@ const express = require('express');
 const logger = require('morgan');
 const ordersRouter = require('./routes/orders');
 const usersRouter = require('./routes/users');
+const menusRouter = require('./routes/menus');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://127.0.0.1/FoodStackDB';
@@ -18,16 +19,13 @@ const db = mongoose.connection;  //Get the default connection
 
 const app = express();
 
-
-
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-
-
 app.use('/orders', ordersRouter);
 app.use('/users', usersRouter);
+app.use('/menus', menusRouter);
 
 app.use(function(req, res, next) { next(createError(404)); });
 app.use(function(err, req, res, next) {

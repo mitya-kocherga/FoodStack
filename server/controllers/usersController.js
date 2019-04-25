@@ -3,13 +3,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
-exports.all_users = function(req, res) {
+exports.allUsers = function(req, res) {
     User.find({}, function (err, users) {
         res.json(users);
     })
 };
 
-exports.add_user = async function(req, res) {
+exports.addUser = async function(req, res) {
     const candidate = await User.findOne({userName: req.body.userName});
     
     if (candidate) { // Пользователь существует, нужно отдать ошибку
@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.delete_user = function(req, res) {
+exports.deleteUser = function(req, res) {
     User.findOneAndRemove({_id: req.body.id}, function (e, user) {
         if (e) return res.status(400).send({message: 'Object not found'});
         return res.status(200).send({message: 'Object successfully deleted'});

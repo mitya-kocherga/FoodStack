@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
   {
-    userName: {type: String, required: true, max: 100},
+    userName: String,
     userID: String,
     choice: [],
     updated: { type: Date, default: Date.now },
