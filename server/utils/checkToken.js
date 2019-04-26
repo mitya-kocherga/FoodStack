@@ -9,7 +9,7 @@ exports.checkToken = async token => {
      * если все ОК воозвращает userName и userId в объекте 'user'
      * иначе возвращает user: false
      */
-}
+};
 
 exports.auth = async (token, res, callback) => {
     if (token) {
@@ -27,4 +27,4 @@ exports.auth = async (token, res, callback) => {
      * проверяет его валидность и если все ОК вызывает колбек функцию
      * иначе возвращает ответ со статусом 401
      */
-}
+};
