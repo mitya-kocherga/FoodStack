@@ -43,16 +43,21 @@
 const Order = require("../models/Order");
 const Сheck = require('../utils/checkToken');
 
-exports.getAllOrders = async (req, res) => Сheck.auth( req.headers.token, res,
+exports.getAllOrders = (req, res) => Сheck.auth(
+    req.headers.token,
+    res,
     user => req.headers.all ? 
         Order.find({}, (e, orders) => res.json({auth: true, orders})) :
         Order.find({userName: user.userName, isAdmin: user.isAdmin}, (e, orders) => res.json(orders))
-    /**если в заголовке запроса присутствует флаг all == true возвращает ВСЕ значения
+    /**
+     * если в заголовке запроса присутствует флаг all == true возвращает ВСЕ значения
      * иначе возвращает Ордеры только для данного пользователя
      */
 );
 
-exports.addOrder = (req, res) => Сheck.auth( req.headers.token, res,
+exports.addOrder = (req, res) => Сheck.auth(
+    req.headers.token,
+    res,
     user => new Order({ userName: user.userName, userID: user.userId, choice: req.body.choice })
         .save()
         .then( () => res.status(201).send({message:'Created'}))
@@ -62,7 +67,9 @@ exports.addOrder = (req, res) => Сheck.auth( req.headers.token, res,
      */
 );
 
-exports.deleteOrder = (req, res) => Сheck.auth( req.headers.token, res,
+exports.deleteOrder = (req, res) => Сheck.auth(
+    req.headers.token,
+    res,
     () => Order.findOneAndRemove(
         {_id: req.body.id},
         e => e ? res.status(404).send({message: 'Object not found'}) : res.status(200).send({message: 'Object successfully deleted'})
@@ -70,9 +77,11 @@ exports.deleteOrder = (req, res) => Сheck.auth( req.headers.token, res,
      * позволяет удалить заказ
      */
     )
-)
+);
 
-exports.updateOrder = (req, res) => Сheck.auth( req.headers.token, res,
+exports.updateOrder = (req, res) => Сheck.auth(
+    req.headers.token,
+    res,
     () =>  Order.updateOne(
         {_id: req.body.id },
         {choice: req.body.choice},
@@ -81,4 +90,4 @@ exports.updateOrder = (req, res) => Сheck.auth( req.headers.token, res,
      * позволяет изменить заказ
      */
     )
-)
+);
