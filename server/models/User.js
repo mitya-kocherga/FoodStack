@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     userName: String,
     password: String,
     isAdmin : Boolean,
-    
+    approve : { type: Boolean, default: false }
   }
 );
 
