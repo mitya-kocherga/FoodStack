@@ -14,8 +14,12 @@
  *      },
  *      body: {
  *          choice: Array
+ *          paid: {
+ *              date: Date,
+ *              card: Boolean,
+ *              bank: String
+ *          }
  *      }
- *  }
  * 
  * @function deleteOrder: 
  *  req: {
@@ -34,8 +38,13 @@
  *      },
  *      body: {
  *          id: String,
- *          choice: Array  same as in addOrder method
+ *          choice: Array  
+ *      paid: {
+ *          date: Date,
+ *          card: Boolean,
+ *          bank: String
  *      }
+ * //same as in addOrder method
  *  }
  */
 
@@ -58,9 +67,9 @@ exports.getAllOrders = (req, res) => Сheck.auth(
 exports.addOrder = (req, res) => Сheck.auth(
     req.headers.token,
     res,
-    user => new Order({ userName: user.userName, userID: user.userId, choice: req.body.choice })
+    user => new Order({ userName: user.userName, userID: user.userId, choice: req.body.choice, paid: req.body.paid })
         .save()
-        .then( () => res.status(201).send({message:'Created'}))
+        .then( () => res.status(201).send({message:'Created', re: req.body}))
         .catch(err => res.status(400).send({message: 'Data is empty', error: err}))
     /**
      * позволяет добавить заказ

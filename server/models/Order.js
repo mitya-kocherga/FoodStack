@@ -7,6 +7,11 @@ const OrderSchema = new Schema(
     userID: String,
     choice: [],
     updated: { type: Date, default: Date.now },
+    paid: {
+      date: Date,
+      card: Boolean,
+      bank: String
+    }
   }
 );
 
