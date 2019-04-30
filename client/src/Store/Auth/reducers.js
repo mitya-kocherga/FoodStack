@@ -1,20 +1,32 @@
 import { handleActions } from "redux-actions";
 
-import { Auth} from "./Auth";
-import { logIn } from "./actions"
+import { Auth } from "./Auth";
+import { logIn, logInSuccess } from "./actions"
 
-const logInHandler = (state, { payload }) => ({
-  ...state,
+const logInSuccessHandler = (state, { payload }) => {
+  console.log(1);
+  
+  localStorage.setItem('food_token', payload.token);
+  return {
+    ...state,
     isLogin: true,
-    user: payload.user,
     isAdmin: false,
-});
+  }
+};
+
+const loginHandler = state => {
+  console.log(123123);
+  return {
+    ...state,
+  };
+};
 
 
- export const authReducer = handleActions(
-    {
-      [logIn]: logInHandler,
-    },
-    new Auth()
-  );
+export const authReducer = handleActions(
+  {
+    [logIn]       : loginHandler,
+    [logInSuccess]: logInSuccessHandler,
+  },
+  new Auth()
+);
   

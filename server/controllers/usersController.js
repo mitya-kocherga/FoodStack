@@ -45,16 +45,6 @@
  */
 
 const User = require("../models/User");
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
-exports.allUsers = function(req, res) {
-    User.find({}, function (err, users) {
-        res.json(users);
-    })
-};
-
-const User = require("../models/User");
 const UserTools = require('../utils/userTools');
 const Сheck = require('../utils/checkToken');
 
