@@ -1,12 +1,22 @@
-import { emphasize } from '@material-ui/core/styles/colorManipulator';
-
 export const styles = theme => ({
   paperMain: {
-    width: 482,
+    width: 500,
+    height: 315,
     margin: 'auto',
     marginTop: 200,
-    border: '2.5px solid #959595',
+    border: `2.5px solid ${theme.borderColor}`,
   },
-  root: {
+  header: { 
+    width: '100%',
+  },
+  headerTypo: {
+    color: theme.typoColor,
+    padding: '12px 0 0 15px',
+  },
+  chkLabel: {
+    color: theme.typoColor,
+  },
+  textField: {
+    width: 325,
   },
 });

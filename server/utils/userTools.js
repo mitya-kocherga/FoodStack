@@ -38,6 +38,7 @@ exports.logIn = async (req, res)  => {
             const token = jwt.sign({
                 userName: candidate.userName,
                 userId: candidate._id,
+                isAdmin: candidate.isAdmin,
             }, 'secretkey', {expiresIn: '30d'});
             res.status(200).json({token: `Bearer ${token}`})
         } else {
