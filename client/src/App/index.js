@@ -5,12 +5,12 @@ import { withStyles } from '@material-ui/core/styles'
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 
-import Login from '../Login'
-import ListOrder from '../ListOrder'
-import Menu from '../Menu'
-import Admin from '../Admin'
+import Login from '../components/Login'
+import ListOrder from '../components/ListOrder'
+import Menu from '../components/Menu'
+import Admin from '../components/Admin'
 import { styles } from './styles'
-import { isLogin } from '../../Store/Auth'
+import { isLogin } from '../Store/Auth'
 import { withRouter } from 'react-router'
 
 class App extends React.Component {

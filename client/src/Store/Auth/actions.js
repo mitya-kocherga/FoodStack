@@ -1,4 +1,9 @@
 import { createAction } from "redux-actions";
 
-export const logIn = createAction("LOG-IN");
+import { createRequestActions } from "../common/createRequestActions"
+
+export const logIn = createAction("LOGIN");
+export const logInSuccess = createAction('LOGIN_SUCCES');
+export const logInFail = createAction('LOGIN_FAIL');
+
 

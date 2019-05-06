@@ -1,11 +1,12 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux'
+import { createStructuredSelector } from "reselect";
 
 import ListOrder from "./ListOrder";
 import { styles } from "./styles";
 
-const mapStateToProps = ({ counter }) => ({})
+const mapStateToProps = createStructuredSelector({})
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
