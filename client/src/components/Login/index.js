@@ -1,26 +1,30 @@
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { bindActionCreators } from "redux";
+import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { bindActionCreators } from 'redux';
 
-import { styles } from "./styles";
 import Login from './Login';
-import { logInRequest } from "../../Store/Auth/thunk";
+import { logInRequest } from '../../Store/Auth/thunk';
+import { rememberMeClick, rememberMe } from '../../Store/Auth';
+import { styles } from './styles';
+
 
 
 const mapStateToProps = createStructuredSelector({
-  });
+  rememberMeValue: rememberMe
+});
 
-  function mapDispatchToProps(dispatch) {
-    return {
-      actions: bindActionCreators(
-        {
-          logIn: logInRequest
-        },
-        dispatch
-      ),
-    };
-  }
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(
+      {
+        logIn: logInRequest,
+        rememberMe: rememberMeClick,
+      },
+      dispatch
+    ),
+  };
+}
 
 export default connect(
     mapStateToProps,

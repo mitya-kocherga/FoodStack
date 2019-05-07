@@ -1,11 +1,13 @@
 import { handleActions } from "redux-actions";
 
 import { Auth } from "./Auth";
-import { logIn, logInSuccess } from "./actions"
+import { logIn, logInSuccess, logInFail, rememberMeClick } from "./actions"
+
+const loginHandler = state => ({
+  ...state,
+});
 
 const logInSuccessHandler = (state, { payload }) => {
-  console.log(1);
-  
   localStorage.setItem('food_token', payload.token);
   return {
     ...state,
@@ -14,18 +16,28 @@ const logInSuccessHandler = (state, { payload }) => {
   }
 };
 
-const loginHandler = state => {
-  console.log(123123);
+const logInFailHandler = (state, { payload }) => {
   return {
     ...state,
-  };
+    isLogin: false,
+    isAdmin: false,
+    error: payload.message
+  }
 };
+
+const rememberMeClickHandler = state => ({
+  ...state,
+  rememberMe: !state.rememberMe
+});
 
 
 export const authReducer = handleActions(
   {
-    [logIn]       : loginHandler,
-    [logInSuccess]: logInSuccessHandler,
+    [logIn]          : loginHandler,
+    [logInSuccess]   : logInSuccessHandler,
+    [logInFail]      : logInFailHandler,
+
+    [rememberMeClick]: rememberMeClickHandler,
   },
   new Auth()
 );
