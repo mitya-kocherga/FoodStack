@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, Divider, FormControlLabel, Grid, Paper, TextField, Typography } from '@material-ui/core';
 
-import SignIn from './SignIn';
+import SignIn from '@components/SignIn';
 
 export default class Login extends Component {
 

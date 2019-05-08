@@ -1,6 +1,6 @@
 
 import { signIn, signInSuccess, signInFail, setSigning } from '../actions';
-import { notify } from '../../../common/notify';
+import { notify } from '@common/notify';
 
 export const signInRequest = (userName, password) => dispatch => {
     dispatch(signIn(userName, password));
@@ -16,7 +16,7 @@ export const signInRequest = (userName, password) => dispatch => {
     )
      .then(res => res.json())
      .then(data => {
-        if (data.message == ' User created!') {
+        if (data.message === ' User created!') {
             notify('Welcome!');
             dispatch(signInSuccess(data));
             dispatch(setSigning(false))
