@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
 const baseState = state => state.authReducer;
 
@@ -10,5 +10,10 @@ export const isLogin = createSelector(
 export const rememberMe = createSelector(
   baseState,
   s => s.rememberMe
+);
+
+export const signing = createSelector(
+  baseState,
+  s => s.signing
 );
 

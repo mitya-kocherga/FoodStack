@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import Divider from '@material-ui/core/Divider';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Checkbox from '@material-ui/core/Checkbox';
-import { Typography } from '@material-ui/core';
+import { Button, Checkbox, Divider, FormControlLabel, Grid, Paper, TextField, Typography } from '@material-ui/core';
+
+import SignIn from './SignIn';
 
 export default class Login extends Component {
 
@@ -18,9 +13,8 @@ export default class Login extends Component {
   handleLogIn = () => this.props.actions.logIn(this.state.userName, this.state.password);
 
   render() {
-    
-    const { classes, rememberMeValue } = this.props;
-    const { rememberMe } = this.props.actions
+    const { classes, rememberMeValue, actions: {rememberMe} } = this.props;
+
     return (
         <Paper className={classes.paperMain} elevation={1}>
           <Grid container  direction="column" alignItems="center">
@@ -30,11 +24,11 @@ export default class Login extends Component {
               </Typography>
               <Divider variant="middle" style={{height: 2}}/>
             </Grid>
-            <Grid item className={classes.root}>
+            <Grid item>
               <TextField
                 id="outlined-name"
                 label="Name"
-                onChange={ e => this.setState({ userName: e.target.value })}
+                onChange={ e => this.setState({userName: e.target.value})}
                 margin="normal"
                 variant="outlined"
                 className={classes.textField}
@@ -48,11 +42,11 @@ export default class Login extends Component {
               type="password"
               margin="normal"
               variant="outlined"
-              onChange={ e => this.setState({ password: e.target.value })}
+              onChange={ e => this.setState({password: e.target.value})}
               className={classes.textField}
               />
             </Grid>
-            <Grid item className={classes.root}>
+            <Grid item>
               <FormControlLabel classes={{label: classes.chkLabel}}
                 control={
                   <Checkbox color="default" checked={rememberMeValue} onChange={rememberMe}/>
@@ -63,7 +57,7 @@ export default class Login extends Component {
             <Grid item>
               <Grid container direction="row" justify="center" alignItems="center" spacing={8}>
                 <Grid item>
-                  <Button variant="contained" onClick={ this.handleLogIn }>
+                  <Button variant="contained" onClick={this.handleLogIn}>
                     Log in!
                   </Button>
                 </Grid>
@@ -73,14 +67,12 @@ export default class Login extends Component {
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined" onClick={ () => console.log('sign in popup') }>
-                      Sign in!
-                  </Button>
+                  <SignIn />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
       </Paper> 
     );
-  }
-}
+  };
+};
