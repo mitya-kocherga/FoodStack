@@ -8,9 +8,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "precommit": "pretty-quick --staged"
+    "precommit": "pretty-quick --staged",
+    "postinstall": "link-module-alias"
   },
   "devDependencies": {
+    "link-module-alias": "^1.2.0",
     "prettier": "1.16.4",
     "react-scripts": "2.1.8"
   },
@@ -38,5 +40,11 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "_moduleAliases": {
+    "@common": "src/@common",
+    "@store": "src/@store",
+    "Views": "src/Views",
+    "@components": "src/Views/@components"
+  }
 }

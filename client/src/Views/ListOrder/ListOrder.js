@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
 
-import { getToken } from '../../common/getToken';
+import { getToken } from '@common/getToken';
 
 export default class ListOrder extends Component {
   state = {

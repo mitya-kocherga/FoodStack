@@ -5,9 +5,7 @@ import {
   logInSuccess,
   logInFail,
   rememberMeClick,
-  signIn,
   signInFail,
-  signInSuccess,
   setSigning
 } from "./actions";
 

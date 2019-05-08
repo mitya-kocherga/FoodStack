@@ -1,5 +1,3 @@
-import { red } from "@material-ui/core/colors";
-
 export const styles = theme => ({
     headerAll: {
         minWidth: 275,
@@ -12,4 +10,4 @@ export const styles = theme => ({
     main: {
         minWidth: 275,
     }
-    });
+});

@@ -1,17 +1,18 @@
 import React, { Fragment } from 'react'
+import { createStructuredSelector } from "reselect";
+import { connect } from "react-redux";
 import { Route, Link } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
-import { createStructuredSelector } from "reselect";
-import { connect } from "react-redux";
-
-import Login from '../components/Login'
-import ListOrder from '../components/ListOrder'
-import Menu from '../components/Menu'
-import Admin from '../components/Admin'
-import { styles } from './styles'
-import { isLogin } from '../Store/Auth'
 import { withRouter } from 'react-router'
+
+import Login from 'Views/Login'
+import ListOrder from 'Views/ListOrder'
+import Menu from 'Views/Menu'
+import Admin from 'Views/Admin'
+import { styles } from './styles'
+import { isLogin } from '@store/Auth'
+
 
 class App extends React.Component {
 

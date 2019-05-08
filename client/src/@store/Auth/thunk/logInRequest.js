@@ -1,6 +1,6 @@
 
 import { logIn, logInSuccess, logInFail } from '../actions';
-import { notify } from '../../../common/notify';
+import { notify } from '@common/notify';
 
 
 export const logInRequest = (userName, password) => dispatch => {

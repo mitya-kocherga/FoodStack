@@ -1,11 +1,12 @@
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
+import { createStructuredSelector } from 'reselect';
 import { bindActionCreators } from 'redux'
 
 import Admin from "./Admin";
 import { styles } from "./styles";
 
-const mapStateToProps = ({  }) => ({})
+const mapStateToProps = createStructuredSelector({});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
