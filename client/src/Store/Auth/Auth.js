@@ -3,4 +3,5 @@ export class Auth {
     user       = '';
     isAdmin    = false;
     rememberMe = true;
+    signing    = false;
 }
