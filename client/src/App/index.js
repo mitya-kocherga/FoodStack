@@ -1,20 +1,27 @@
 import React, { Fragment } from 'react'
+import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
-import { Route, Link } from 'react-router-dom'
-import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles'
-import { withRouter } from 'react-router'
+import { Route } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router';
 
-import Login from 'Views/Login'
-import ListOrder from 'Views/ListOrder'
-import Menu from 'Views/Menu'
-import Admin from 'Views/Admin'
-import { styles } from './styles'
-import { isLogin } from '@store/Auth'
+import Login from 'Views/Login';
+import ListOrder from 'Views/ListOrder';
+import Menu from 'Views/Menu';
+import Admin from 'Views/Admin';
+import { styles } from './styles';
+
+import { isLogin } from '@store/Auth';
+import { checkTokenRequest } from '@store/Auth/thunk';
+import NavDropDown from '@components/NavDropDown';
 
 
 class App extends React.Component {
+
+  componentDidMount() {
+    this.props.actions.checkToken();
+  } 
 
   render() {
     const { classes, isLogin } = this.props;
@@ -24,17 +31,11 @@ class App extends React.Component {
         (
           <Fragment>
             <header className={classes.headerAll}>
-              <Typography variant="inherit" className={classes.headerMenu}>
-                <Link to="/">ListOrder</Link>
-              </Typography>
-              
-              <Typography variant="inherit" className={classes.headerMenu}>
-                <Link to="/Menu-us">Menu</Link>
-              </Typography>
+              <NavDropDown />
             </header>
 
             <main className={classes.main}>
-              <Route exact path="/" component={ListOrder} />
+              <Route exact path="/orders" component={ListOrder} />
               <Route exact path="/Menu-us" component={Menu} />
               <Route exact path="/Admin" component={Admin} />
             </main>
@@ -48,4 +49,14 @@ const mapStatetoProps = createStructuredSelector({
   isLogin
 });
 
-export default  withRouter(connect(mapStatetoProps)(withStyles(styles, { withTheme: true })(App)))
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(
+    {
+      checkToken: checkTokenRequest
+    },
+    dispatch
+  ),
+});
+
+
+export default  withRouter(connect(mapStatetoProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(App)))

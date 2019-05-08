@@ -5,6 +5,12 @@
  *          token: String
   *      }
  *  }
+ *  *@function checkToken: 
+ *  req: {
+ *      headers: {
+ *          token: String
+  *      }
+ *  }
  * 
  *@function  addUser: 
  *  req: {
@@ -54,6 +60,15 @@ exports.getAllUsers = (req, res) => Сheck.auth(
     () => User.find({}, (err, users) => res.json(users))
     /**
      * возвращает всех пользователей
+     */
+);
+
+exports.checkToken = (req, res) => Сheck.auth(
+    req.headers.token,
+    res,
+    () => res.status(200).send({message: 'Auth OK', auth: true})
+    /**
+     * check auth
      */
 );
 

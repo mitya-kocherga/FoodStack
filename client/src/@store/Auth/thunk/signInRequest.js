@@ -3,7 +3,7 @@ import { signIn, signInSuccess, signInFail, setSigning } from '../actions';
 import { notify } from '@common/notify';
 
 export const signInRequest = (userName, password) => dispatch => {
-    dispatch(signIn(userName, password));
+    dispatch(signIn());
 
     fetch('/users/add-user', {
         method: 'POST',
