@@ -4,7 +4,7 @@ import { notify } from '@common/notify';
 
 
 export const logInRequest = (userName, password) => dispatch => {
-    dispatch(logIn(userName, password));
+    dispatch(logIn());
 
     fetch('/users/login-user', {
         method: 'POST',

@@ -5,6 +5,8 @@ const controller = require('../controllers/usersController');
 
 router.get('/', controller.getAllUsers);
 
+router.get('/check-auth', controller.checkToken);
+
 router.post('/add-user', controller.addUser);
 
 router.post('/login-user', controller.login);
