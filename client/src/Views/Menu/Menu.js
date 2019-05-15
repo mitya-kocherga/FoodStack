@@ -1,152 +1,147 @@
-import React, { Component, Fragment }  from 'react'
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from "@material-ui/core/Button";
-import Grid from '@material-ui/core/Grid';
+import React, { Component, Fragment }  from 'react';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { IconButton, Paper, InputLabel, Table, TableBody, TableCell, TableRow, FormControl,  Select, MenuItem, Button, Grid, Typography  } from '@material-ui/core';
 
+
+import RadioControl from '@components/common/RadioControl'
 
 export default class Menu extends Component {
 
     componentDidMount() {
-        /**
-         * здесь долджен быть запрос который загружает меню на определенную дату
-         */
-
-       /* fetch('/orders')
-          .then(res => res.json())
-          .then(orders => this.setState({ orders }))
-          .catch(error => console.error(error));
-          */
-      }
-    changeHandler( e ,index) {
-        e.stopPropagation();
-        e.preventDefault()
-        this.props.actions.changeSelectorAction({
-            id: index,
-            value: e.target.value,
-        })
-    }
-
-    changeSecondHandler( e ,index) {
-        e.stopPropagation();
-        e.preventDefault()
-        this.props.actions.changeSelectorSecondAction({
-            id: index,
-            value: e.target.value,
-        })
-    }
-    comon(choice) {//запрос для добавления заказа
-        fetch( 'orders/add-order', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body : JSON.stringify({ userName: 'WasyanPRRO$$$', choice, userID: '5cb6de0241fe3b7eb59c5db2'})
-        }).catch(error => console.error(error));        
-    }
-    
-    render() {
-        const { classes, SecondCourse, firstCouresSelectors, secondCouresSelectors } = this.props;
-        const { dataSelectionMainDishes, } = this.props.mainCourse;
-        const { dataSelectionSecondDishes, } = this.props.secondCourse;
-        const { addSecondSelectorAction, addSelectorAction } = this.props.actions;
-        
+        this.props.actions.fetchMenus(this.props.date)          
+    };
+    getSelector (item) {
+        const { classes } = this.props;
         return (
-            <Paper className={classes.root} elevation={1}>
-                    <h1>Menu</h1>
-                    <p>Do you want to order food?</p>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="center">Course</TableCell>
-                            <TableCell align="center">Dishes</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell component="th" scope="row" align="center">Main Course</TableCell>
-                            <TableCell align="center">
-                                {
-                                firstCouresSelectors.map( (item, index) => (
-                                    <FormControl className={classes.formControl}>
-                                        <Select key={index}
-                                            value={item.value}
-                                            onChange={ e => this.changeHandler(e,index)}
-                                            inputProps={{
-                                            name: "dataSelectionMainDishes",
-                                            id: "id-dataSelectionMainDishes",
-                                            }}
-                                            >
-                                            <MenuItem> choose </MenuItem>
-                                            {dataSelectionMainDishes.map(item => (
-                                                    <MenuItem key={item.key} value={item.name}>{item.name}</MenuItem>
-                                                ))}
-                                        </Select>))
-                                    </FormControl> 
-                                ))}
-                                <Grid item> 
-                                    <Button
-                                    color="secondary"
-                                    variant="contained"
-                                    onClick={() => addSelectorAction()}
-                                    >
-                                        Add row
-                                    </Button>
-                                </Grid> 
-                                
-                            </TableCell>
-                        </TableRow>
+            <FormControl className={classes.formControl}>
+                <InputLabel htmlFor={item.name + '-variants'}>Age</InputLabel>
+                <Select
+                    value={'none'}
+                    onChange={()=>{}}
+                    inputProps={{
+                    name: `${item.name}-variants`,
+                    id: `${item.name}-variants-id`,
+                    }}
+                >
+                    <MenuItem value="">
+                        None
+                    </MenuItem>
+                    { item.variants.map( (variant, index) => 
+                        <MenuItem key={index} value={variant}>{variant}</MenuItem>
+                    )}
+                </Select>
+            </FormControl>
+        );
+    };
 
-                        <TableRow>
-                            <TableCell component="th" scope="row" align="center">The Second Course</TableCell>
-                            <TableCell align="center">
-                            {
-                                secondCouresSelectors.map( (item, index) => (
-                                    <FormControl className={classes.formControl}>
-                                        <Select key={index}
-                                            value={item.value}
-                                            onChange={ e => this.changeSecondHandler(e,index)}
-                                            inputProps={{
-                                            name: "dataSelectionSecondDishes",
-                                            id: "id-dataSelectionSecondDishes",
-                                            }}
-                                            >
-                                            <MenuItem> choose </MenuItem>
-                                            {dataSelectionSecondDishes.map(item => (
-                                                <MenuItem key={item.key} value={item.name}>{item.name}</MenuItem>
-                                                ))}
-                                        </Select>))
-                                    </FormControl>
-                                ))}
-                                    <Grid item> 
-                                        <Button
-                                            color="secondary"
-                                            variant="contained"
-                                            onClick={() => addSecondSelectorAction()}
-                                            >
-                                            Add row
-                                        </Button>
-                                    </Grid> 
-                            </TableCell>
-                        </TableRow>
+    getMenuTable (menu) {
+        const { classes } = this.props;
+        return (
+            <Paper elevation={0} className={classes.tableStyle}>
+                <Table padding="dense">
+                    <TableBody>
+                        {menu.map((menuItem, index) => (
+                            <TableRow hover key={index}>
+                                <TableCell>
+                                    {menuItem.name}
+                                </TableCell>
+                                <TableCell>
+                                    {menuItem.price}
+                                </TableCell>
+                                <TableCell>
+                                    {this.getSelector(menuItem)}
+                                </TableCell>
+                                <TableCell>
+                                    <IconButton>
+                                        <AddIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
-                <Button
-                    color="secondary"
-                    variant="contained"
-                    onClick={() => this.comon( firstCouresSelectors )}//запрос для добавления заказа
-                >
-                    comon i want it!
-                </Button>
-            </Paper>   
-        )
-    }
-}
+            </Paper>
+        );    
+    };
+
+    getOrderTable (menu) {
+        const { classes } = this.props;
+        return (
+            <Paper elevation={0} className={classes.tableStyle}>
+                <Table padding="dense">
+                    <TableBody>
+                        {menu.map((menuItem, index) => (
+                            <TableRow key={index} className={classes.tableRowBorderBottom}>
+                                <TableCell>
+                                    {menuItem.name}
+                                </TableCell>
+                                <TableCell>
+                                    {menuItem.price}
+                                </TableCell>
+                                <TableCell>
+                                    <IconButton>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </Paper>
+        );
+    };
+    
+    render() {
+        const { classes, menu } = this.props;
+        const radioData = {
+            first: {firstRadio: {name: 'Оплачено', value: 'paid'}, secondRadio: {name: 'Оплачу позже', value: 'later'}},
+            second: {firstRadio: {name: 'Карта', value: 'card'}, secondRadio: {name: 'Наличные', value: 'cash'}}
+        };
+
+        return (
+            <Fragment>
+            {menu && menu.length === 0 ? 
+                <Typography> loading... </Typography>
+                :
+                <Paper className={classes.root} >
+                    <Grid container direction="row" justify="space-evenly" alignItems="flex-start">
+                        <Grid item container direction="column" justify="center" alignItems="center" style={{width:'50%'}}>
+                            <Grid item>
+                                <Typography className={classes.redText} variant="h3">
+                                    Меню на {menu.created_for.split('T')[0]} {/*TODO: здесь должэен быть селектор с возможностью выбора дыты!*/}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                {this.getMenuTable(menu.menu)}
+                            </Grid>
+                        </Grid>
+                        <Grid item container direction="column" justify="space-between" alignItems="center" style={{width:'50%'}}>
+                            <Grid item>
+                                <Typography className={classes.redText} variant="h3">
+                                    Ваш заказ:
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                {this.getOrderTable(menu.menu)}
+                            </Grid>
+                            <Grid item container direction="row" justify="space-around" alignItems="center" >
+                                <RadioControl {...radioData.first}/>
+                                <RadioControl {...radioData.second} />
+                            </Grid>
+                            <Grid item container direction="row" justify="space-evenly" alignItems="center" >
+                                <Button variant="outlined" color="primary" onClick={()=>{}}>
+                                    Сделать заказ
+                                </Button>
+                                <Typography variant="h4">
+                                    Цена: {'100500p'}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            }
+        </Fragment>
+        );
+    };
+};

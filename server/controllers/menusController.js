@@ -53,7 +53,7 @@ exports.getMenus = (req, res) => Сheck.auth(
              .find({}, (err, orders) => res.json(orders))
              .catch( err => res.status(400).send({message: 'Something went wrong.', error: err})) :
             Menu
-             .find({created_for: req.body.created_for }, (err, orders) => res.json(orders))
+             .find({created_for: req.headers.created_for }, (err, menu) => res.json({menu, ok: true}))
              .catch( err => res.status(400).send({message: 'Something went wrong.', error: err}))
     /**
     * если в заголовке запроса присутствует флаг all == true возвращает ВСЕ значения

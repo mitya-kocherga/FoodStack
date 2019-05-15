@@ -45,6 +45,7 @@
     "@common": "src/@common",
     "@store": "src/@store",
     "Views": "src/Views",
-    "@components": "src/Views/@components"
+    "@components": "src/Views/@components",
+    "@img": "src/@img"
   }
 }

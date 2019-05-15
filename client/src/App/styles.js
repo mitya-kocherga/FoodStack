@@ -3,11 +3,14 @@ export const styles = theme => ({
         minWidth: 275,
         display: "flex",
       },
-    headerMenu: {
-        minWidth: 100,
-        padding: 11,
-    },
     main: {
         minWidth: 275,
+        maxWidth: 1175,
+        minHeight: 600,
+        margin: 'auto',
+        marginTop: 10,
+    },
+    redText: {
+        color: theme.primaryRedColor,
     }
 });

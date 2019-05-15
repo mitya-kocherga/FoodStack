@@ -3,30 +3,24 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 
+import { Header } from './Header';
 import { styles } from './styles';
-import Menu from './Menu';
-
-import { fetchMenus } from '@store/Menus/thunk';
-import { date, menu } from '@store/Menus';
-
+import { logOut } from '@store/Auth';
 
 const mapStateToProps = createStructuredSelector({
-  date,
-  menu
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(
-    {
-      fetchMenus,
-    },
-    dispatch
-  ),
+    actions: bindActionCreators(
+        {
+            logOut
+        },  
+        dispatch
+    ),
 });
-
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(withStyles(styles, { withTheme: true })(Menu));
+)(withStyles(styles, {withTheme: true})(Header));
 
