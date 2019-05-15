@@ -14,14 +14,14 @@ import { styles } from './styles';
 
 import { isLogin } from '@store/Auth';
 import { checkTokenRequest } from '@store/Auth/thunk';
-import NavDropDown from '@components/NavDropDown';
+import Header from '@components/Header';
 
 
 class App extends React.Component {
 
   componentDidMount() {
     this.props.actions.checkToken();
-  } 
+  };
 
   render() {
     const { classes, isLogin } = this.props;
@@ -31,9 +31,8 @@ class App extends React.Component {
         (
           <Fragment>
             <header className={classes.headerAll}>
-              <NavDropDown />
+              <Header />
             </header>
-
             <main className={classes.main}>
               <Route exact path="/orders" component={ListOrder} />
               <Route exact path="/Menu-us" component={Menu} />
@@ -43,8 +42,9 @@ class App extends React.Component {
         )}
       </div>
     )
-  }
-}
+  };
+};
+
 const mapStatetoProps = createStructuredSelector({
   isLogin
 });
@@ -59,4 +59,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default  withRouter(connect(mapStatetoProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(App)))
+export default  withRouter(connect(mapStatetoProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(App)));

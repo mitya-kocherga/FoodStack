@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import { dateReducer } from './course/reducers'
+import { menusReducer } from './Menus/reducers'
 import { authReducer } from './Auth/reducers'
 
 export default combineReducers({
-  dateReducer,
+  menusReducer,
   authReducer
 })

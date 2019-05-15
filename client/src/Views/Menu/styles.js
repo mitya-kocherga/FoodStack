@@ -1,13 +1,17 @@
 export const styles = theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    minHeight: 600,
   },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
+  redText: {
+    color: theme.primaryRedColor,
+    margin: 10
   },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+  tableStyle: {
+    border: `1.5px solid ${theme.secondaryBlueColor}`,
+    borderRadius: 7,
+    minHeight: 325,
   },
+  tableRowBorderBottom: {
+    borderBottom: '.5px solid #80808057',
+  }
 });
