@@ -1,28 +1,30 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect'
 
 const baseState = state => state.dateReducer
 
 export const FirstCourse = createSelector(
-    baseState,
-    state => state.firstCourses
-  );
+  baseState,
+  state => state.firstCourses
+)
 export const SecondCourse = createSelector(
-    baseState,
-    state => state.secondCourses
-  );
-  export const mainCourse = createSelector(
-    baseState,
-    state => state.mainCourse
-  );
-  export const secondCourse = createSelector(
-    baseState,
-    state => state.secondCourse
-  );
-  export const firstCouresSelectors = createSelector(
-    FirstCourse,
-    state => state.selectors
-  );
-  export const secondCouresSelectors = createSelector(
-    SecondCourse,
-    state => state.selectors
-  );
+  baseState,
+  state => state.secondCourses
+)
+//главное блюдо
+export const optionMainCourse = createSelector(
+  baseState,
+  state => state.optionMainCourse
+)
+//второе блюдо
+export const optionSecondCourse = createSelector(
+  baseState,
+  state => state.optionSecondCourse
+)
+export const firstCourseSelectors = createSelector(
+  FirstCourse,
+  state => state.selectors
+)
+export const secondCourseSelectors = createSelector(
+  SecondCourse,
+  state => state.selectors
+)

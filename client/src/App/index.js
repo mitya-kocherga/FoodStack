@@ -6,15 +6,15 @@ import { Route } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
-import Login from 'Views/Login';
-import ListOrder from 'Views/ListOrder';
-import Menu from 'Views/Menu';
-import Admin from 'Views/Admin';
+import Login from '../Views/Login';
+import ListOrder from '../Views/ListOrder';
+import Menu from '../Views/Menu';
+import Admin from '../Views/Admin';
 import { styles } from './styles';
 
-import { isLogin } from '@store/Auth';
-import { checkTokenRequest } from '@store/Auth/thunk';
-import NavDropDown from '@components/NavDropDown';
+import { isLogin } from '../@store/Auth';
+import { checkTokenRequest } from '../@store/Auth/thunk';
+import NavDropDown from '../Views/@components/NavDropDown';
 
 
 class App extends React.Component {

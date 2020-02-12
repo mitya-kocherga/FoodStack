@@ -33,7 +33,6 @@ const changeSelectorSecondActionHandler = (state, { payload }) => {
 
 const addSelectorActionHandler = state => {
   const sel = new firstSelectorConstructor();
-
     return {
       ...state,
       firstCourses: {

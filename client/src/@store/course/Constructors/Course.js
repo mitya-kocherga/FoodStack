@@ -6,11 +6,9 @@ export class Course {
     secondCourses = {
         selectors: [],
     } ;
-    
-    secondcourse =  "";
-    
-    mainCourse = {
-        dataSelectionMainDishes: [
+
+    optionMainCourse = {
+        dataSelectionFirstDishes: [
             {
                 name: 'BORSH',
                 key: 0,
@@ -22,7 +20,7 @@ export class Course {
         ]
     };
 
-    secondCourse = {
+    optionSecondCourse = {
         dataSelectionSecondDishes: [
             {
                 name: 'potato',
