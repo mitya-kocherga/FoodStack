@@ -1,10 +1,12 @@
 import { setOptionAction } from '../actions'
+import { getToken } from '../../../@common/getToken'
 
 export const getOptions = () => dispatch => {
 
-  fetch('http://localhost:3002/menus/', {
+  fetch('/menus/', {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json',
+      'token': getToken()}
   }).then(response => response.json())
     .then(data => dispatch(setOptionAction(data)))
 }

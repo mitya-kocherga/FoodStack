@@ -1,5 +1,5 @@
 /**
- *@function getMenus:
+ *@function getMenu:
  *  req: {
  *      headers: {
  *          token: String,
@@ -44,7 +44,7 @@
 const Menu = require("../models/Menu");
 const Сheck = require('../utils/checkToken');
 
-exports.getMenus = (req, res) => Сheck.auth(
+exports.getMenu = (req, res) => Сheck.auth(
 	req.headers.token,
 	res,
 	() =>
@@ -52,8 +52,42 @@ exports.getMenus = (req, res) => Сheck.auth(
 			Menu
 				.find({}, (err, orders) => res.json(orders))
 				.catch(err => res.status(400).send({message: 'Something went wrong.', error: err})) :
-			Menu
-				.find({created_for: req.body.created_for}, (err, orders) => res.json(orders))
+			// Menu
+			// 	.find({created_for: req.body.created_for}, (err, orders) => res.json(orders))
+			res.json({
+					firstDish: [
+						{
+							name: 'Борщ',
+							value: 'borsh',
+							price: 20
+						},
+						{
+							name: 'СольянОчька',
+							value: 'solyanka',
+							price: 20
+						},
+						{
+							name: 'Супчег',
+							value: 'soup',
+							price: 20
+						},
+					],
+					secondDish: [
+						{
+							name: 'Диетическое блюдо - гречка с грибами на пару и свёкла отварная с сметаной',
+							value: 'dietDishGrechka',
+							price: 50
+						},
+					],
+					salad: [
+						{
+							name: 'seledochka pod shubkoy',
+							value: 'salad',
+							price: 100
+						}
+					],
+				},
+			)
 				.catch(err => res.status(400).send({message: 'Something went wrong.', error: err}))
 	/**
 	 * если в заголовке запроса присутствует флаг all == true возвращает ВСЕ значения

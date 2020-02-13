@@ -6,33 +6,30 @@ import { bindActionCreators } from 'redux'
 import { styles } from './styles'
 import Menu from './Menu'
 import {
-  FirstCourse,
-  SecondCourse,
-  optionMainCourse,
-  optionSecondCourse,
-  changeSelectorAction,
+  setOptionAction,
+  changeSelectorFirstAction,
   changeSelectorSecondAction,
   addSelectorAction,
   addSecondSelectorAction,
-  firstCourseSelectors,
-  secondCourseSelectors
+  firstCourseOption,
+  secondCourseOption,
 } from '../../@store/course'
+
+import { getOptions } from '../../@store/course/thunk';
 
 
 const mapStateToProps = createStructuredSelector({
-  FirstCourse,
-  SecondCourse,
-  optionMainCourse,
-  optionSecondCourse,
-  firstCourseSelectors,
-  secondCourseSelectors
+  firstCourseOption,
+  secondCourseOption,
 })
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
       {
-        changeSelectorAction,
+        getOptions,
+        setOptionAction,
+        changeSelectorFirstAction,
         changeSelectorSecondAction,
         addSelectorAction,
         addSecondSelectorAction

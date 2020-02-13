@@ -72,7 +72,6 @@ export const authReducer = handleActions(
     [signInFail]       : signInFailHandler,
     [checkTokenSuccess]: checkTokenSuccessHandler,
     [checkTokenFail]   : checkTokenFailHandler,
-
     [rememberMeClick]  : rememberMeClickHandler,
     [setSigning]       : setSigningClickHandler,
     [logOut]           : logOutHandler,

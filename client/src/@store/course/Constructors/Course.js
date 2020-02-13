@@ -1,35 +1,17 @@
 export class Course {
-    firstCourses = {
-        selectors: [],
-    } ;
+  firstCourses = {
+    list: {}
+  }
 
-    secondCourses = {
-        selectors: [],
-    } ;
+  secondCourses = {
+    list: {}
+  }
 
-    optionMainCourse = {
-        dataSelectionFirstDishes: [
-            {
-                name: 'BORSH',
-                key: 0,
-            },
-            {
-                name: 'гороховый суп',
-                key: 1,
-            },
-        ]
-    };
+  optionFirstCourse = {
+    dataSelectionFirstDishes: []
+  }
 
-    optionSecondCourse = {
-        dataSelectionSecondDishes: [
-            {
-                name: 'potato',
-                key: 0,
-            },
-            {
-                name: 'meat',
-                key: 1,
-            },
-        ]
-    };
+  optionSecondCourse = {
+    dataSelectionSecondDishes: []
+  }
 }

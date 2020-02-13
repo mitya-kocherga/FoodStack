@@ -3,7 +3,7 @@ const router = express.Router();
 
 const controller = require('../controllers/menusController');
 
-router.get('/menu', controller.getMenus);
+router.get('/', controller.getMenu);
 
 router.post('/add-menu', controller.addMenu);
 

@@ -10,9 +10,9 @@ const getTomorrow = () => { //return tomorrow
 
 const MenuSchema = new Schema(
 	{
-		menu: [],
-		created: {type: Date, default: Date.now},
-		created_for: {type: Date, default: getTomorrow()}
+		menu: []
+		// created: {type: Date, default: Date.now},
+		// created_for: {type: Date, default: getTomorrow()}
 	}
 );
 

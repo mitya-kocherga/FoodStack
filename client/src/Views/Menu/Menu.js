@@ -10,23 +10,26 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import Fab from '@material-ui/core/Fab'
+import AddIcon from '@material-ui/icons/Add'
+
+import { ModalMenu } from '../@components/selectMenuModal/ModalMenu'
 
 
 export default class Menu extends Component {
+  state = {
+    isOpen: false,
+    selectedDate: new Date()
+  }
 
   componentDidMount() {
-     /* fetch('/menu')
-       .then(res => res.json())
-       .then(data =>
-       setMenu({data}))
-       .catch(error => console.error(error));
-       */
+    this.props.actions.getOptions()
   }
 
   changeHandler(e, index) {
     e.stopPropagation()
     e.preventDefault()
-    this.props.actions.changeSelectorAction({
+    this.props.actions.changeSelectorFirstAction({
       id: index,
       value: e.target.value
     })
@@ -41,7 +44,7 @@ export default class Menu extends Component {
     })
   }
 
-  comon(choice) { //запрос для добавления заказа
+  addMenu(choice) { //запрос для добавления заказа
     fetch('orders/add-order', {
       method: 'POST',
       headers: {
@@ -52,11 +55,17 @@ export default class Menu extends Component {
     }).catch(error => console.error(error))
   }
 
+  handleClickOpen = () => {
+    this.setState({ isOpen: true })
+    console.log('isOPen State: ', this.state.isOpen)
+  }
+
   render() {
-    const { classes, optionSecondCourse, firstCourseSelectors, secondCourseSelectors } = this.props
-    const { dataSelectionFirstDishes } = this.props.optionMainCourse
-    const { dataSelectionSecondDishes } = this.props.optionSecondCourse
-    const { addSecondSelectorAction, addSelectorAction } = this.props.actions
+    const { classes, firstCourseSelectors } = this.props;
+    const { addSelectorAction } = this.props.actions;
+    const { firstCourseOption, secondCourseOption } = this.props;
+
+    // const { dataSelectionFirstDishes } = this.props.firstCourseOption;
 
     return (
       <Paper className={ classes.root } elevation={ 1 }>
@@ -72,66 +81,54 @@ export default class Menu extends Component {
             <TableRow>
               <TableCell component="th" scope="row" align="center">Первое блюдо</TableCell>
               <TableCell align="center">
-                {
-                  firstCourseSelectors.map((item, index) => (
-                    <FormControl className={ classes.formControl }>
-                      <Select key={ index }
-                              value={ item.value }
-                              onChange={ e => this.changeHandler(e, index) }
-                              inputProps={ {
-                                name: 'dataSelectionFirstDishes',
-                                id: 'id-dataSelectionFirstDishes'
-                              } }
-                      >
-                        <MenuItem> choose </MenuItem>
-                        { dataSelectionFirstDishes.map(item => (
-                          <MenuItem key={ item.key } value={ item.name }>{ item.name }</MenuItem>
-                        )) }
-                      </Select>))
-                    </FormControl>
-                  )) }
+                <FormControl className={ classes.formControl }>
+                  <Select
+                    onChange={ e => this.changeHandler(e) }
+                    inputProps={ {
+                      name: 'dataSelectionFirstDishes',
+                      id: 'id-dataSelectionFirstDishes'
+                    } }>
+                    { firstCourseOption.map(item => (
+                      <MenuItem key={ item.id } value={ item.name }> { item.name } </MenuItem>
+                    )) }
+                  </Select>
+                </FormControl>
                 <Grid item>
-                  <Button
-                    color="secondary"
-                    variant="contained"
-                    onClick={ () => addSelectorAction() }
-                  >
-                    Добавить
-                  </Button>
+                  {/*<Fab*/}
+                  {/*  color="primary"*/}
+                  {/*  aria-label="add"*/}
+                  {/*  // onClick={ handleClickOpen }*/}
+                  {/*> */}
+                    <ModalMenu />
+                  {/*  <AddIcon/>*/}
+                  {/*</Fab>*/}
                 </Grid>
 
               </TableCell>
             </TableRow>
-
             <TableRow>
               <TableCell component="th" scope="row" align="center">Второе блюдо</TableCell>
               <TableCell align="center">
-                {
-                  secondCourseSelectors.map((item, index) => (
-                    <FormControl className={ classes.formControl }>
-                      <Select key={ index }
-                              value={ item.value }
-                              onChange={ e => this.changeSecondHandler(e, index) }
-                              inputProps={ {
-                                name: 'dataSelectionSecondDishes',
-                                id: 'id-dataSelectionSecondDishes'
-                              } }
-                      >
-                        <MenuItem> choose </MenuItem>
-                        { dataSelectionSecondDishes.map(item => (
-                          <MenuItem key={ item.key } value={ item.name }>{ item.name }</MenuItem>
-                        )) }
-                      </Select>))
-                    </FormControl>
-                  )) }
+                <FormControl className={ classes.formControl }>
+                  <Select
+                    onChange={ e => this.changeSecondHandler(e) }
+                    inputProps={ {
+                      name: 'dataSelectionSecondDishes',
+                      id: 'id-dataSelectionSecondDishes'
+                    } }>
+                    { secondCourseOption.map(item => (
+                      <MenuItem key={ item.key } value={ item.name }>{ item.name }</MenuItem>
+                    )) }
+                  </Select>
+                </FormControl>
                 <Grid item>
-                  <Button
-                    color="secondary"
-                    variant="contained"
-                    onClick={ () => addSecondSelectorAction() }
+                  <Fab
+                    color="primary"
+                    aria-label="add"
+                    // onClick={ () => addSecondSelectorAction() }
                   >
-                    Добавить
-                  </Button>
+                    <AddIcon/>
+                  </Fab>
                 </Grid>
               </TableCell>
             </TableRow>
@@ -140,7 +137,7 @@ export default class Menu extends Component {
         <Button
           color="secondary"
           variant="contained"
-          onClick={ () => this.comon(firstCourseSelectors) }//запрос для добавления заказа
+          onClick={ () => this.addMenu(firstCourseSelectors) }//запрос для добавления заказа
         >
           Заказать
         </Button>
