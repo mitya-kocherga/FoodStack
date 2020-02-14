@@ -4,37 +4,37 @@ import { bindActionCreators } from 'redux'
 
 import { ModalMenu } from './ModalMenu'
 import {
+  changeSelectorFirstAction,
+  changeSelectorSecondAction,
+  addSelectorFirstAction,
   addSecondSelectorAction,
-  addSelectorAction,
-  changeSelectorFirstAction, changeSelectorSecondAction,
   firstCourseOption,
-  secondCourseOption, setOptionAction
+  secondCourseOption,
 } from '../../../@store/course'
-import { getOptions } from '../../../@store/course/thunk'
 import { withStyles } from '@material-ui/core/styles'
 import { styles } from '../../Menu/styles'
+import { getOptions } from '../../../@store/course/thunk'
 
 
 const mapStateToProps = createStructuredSelector({
   firstCourseOption,
   secondCourseOption,
-})
+});
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
       {
-        getOptions,
-        setOptionAction,
+        addSelectorFirstAction,
+        addSecondSelectorAction,
         changeSelectorFirstAction,
         changeSelectorSecondAction,
-        addSelectorAction,
-        addSecondSelectorAction
       },
       dispatch
     )
   }
 }
+
 
 export default connect(
   mapStateToProps,

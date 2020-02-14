@@ -9,7 +9,6 @@ import {
   setOptionAction,
   changeSelectorFirstAction,
   changeSelectorSecondAction,
-  addSelectorAction,
   addSecondSelectorAction,
   firstCourseOption,
   secondCourseOption,
@@ -31,7 +30,6 @@ function mapDispatchToProps(dispatch) {
         setOptionAction,
         changeSelectorFirstAction,
         changeSelectorSecondAction,
-        addSelectorAction,
         addSecondSelectorAction
       },
       dispatch
