@@ -1,10 +1,11 @@
 export class Course {
-  firstCourses = {
-    list: {}
+
+  menu = {
+    dishes: []
   }
 
-  secondCourses = {
-    list: {}
+  orderedCourses = {
+    list: []
   }
 
   optionFirstCourse = {

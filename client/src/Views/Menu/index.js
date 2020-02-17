@@ -7,9 +7,8 @@ import { styles } from './styles'
 import Menu from './Menu'
 import {
   setOptionAction,
-  changeSelectorFirstAction,
-  changeSelectorSecondAction,
-  addSecondSelectorAction,
+  changeFirstAction,
+  changeSecondAction,
   firstCourseOption,
   secondCourseOption,
 } from '../../@store/course'
@@ -28,9 +27,8 @@ function mapDispatchToProps(dispatch) {
       {
         getOptions,
         setOptionAction,
-        changeSelectorFirstAction,
-        changeSelectorSecondAction,
-        addSecondSelectorAction
+        changeFirstAction,
+        changeSecondAction,
       },
       dispatch
     )

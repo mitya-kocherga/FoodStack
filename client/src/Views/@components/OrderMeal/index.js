@@ -2,33 +2,39 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators } from 'redux'
 
-import { ModalMenu } from './ModalMenu'
+import { OrderMeal } from './OrderMeal'
+
 import {
-  changeSelectorFirstAction,
-  changeSelectorSecondAction,
-  addSelectorFirstAction,
-  addSecondSelectorAction,
+  changeFirstAction,
+  changeSecondAction,
+  addCoursesAction,
   firstCourseOption,
   secondCourseOption,
+  listOfOrder,
+  menuList
 } from '../../../@store/course'
-import { withStyles } from '@material-ui/core/styles'
-import { styles } from '../../Menu/styles'
-import { getOptions } from '../../../@store/course/thunk'
 
+
+import { withStyles } from '@material-ui/core/styles'
+
+import { styles } from './styles'
 
 const mapStateToProps = createStructuredSelector({
   firstCourseOption,
   secondCourseOption,
+  addCoursesAction,
+  listOfOrder,
+  menuList
 });
+
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
       {
-        addSelectorFirstAction,
-        addSecondSelectorAction,
-        changeSelectorFirstAction,
-        changeSelectorSecondAction,
+        addCoursesAction,
+        changeFirstAction,
+        changeSecondAction,
       },
       dispatch
     )
@@ -39,5 +45,5 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(ModalMenu))
+)(withStyles(styles, { withTheme: true })(OrderMeal))
 

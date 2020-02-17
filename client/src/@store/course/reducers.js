@@ -3,13 +3,11 @@ import { handleActions } from 'redux-actions'
 import { Course } from './Constructors/Course'
 import {
   setOptionAction,
-  changeSelectorFirstAction,
-  changeSelectorSecondAction,
-  addSelectorFirstAction,
-  addSecondSelectorAction
+  changeFirstAction,
+  changeSecondAction,
+  addCoursesAction,
 } from '../course'
 
-//set options
 const setOption = (state, { payload }) => {
   return {
     ...state,
@@ -20,14 +18,30 @@ const setOption = (state, { payload }) => {
     optionSecondCourse: {
       ...state.optionSecondCourse,
       dataSelectionSecondDishes: payload.secondDish
+    },
+    menu: {
+      ...state.menu,
+      dishes: Object.keys(payload)
     }
   }
-};
+}
 
+const addCoursesToOrderHandler = (state, {payload}) => {
+  return {
+    ...state,
+    orderedCourses: {
+      ...state.orderedCourses,
+      list: [
+        ...state.orderedCourses.list,
+        payload,
+        ]
+    }
+  }
+}
 
-const changeSelectorFirstActionHandler = (state, { payload }) => {
-  const newRow = state.firstCourses.list;
-  newRow[payload.id].value = payload.value;
+const changeFirstActionHandler = (state, { payload }) => {
+  const newRow = state.firstCourses.list
+  newRow[payload.id].value = payload.value
 
   return {
     ...state,
@@ -36,11 +50,11 @@ const changeSelectorFirstActionHandler = (state, { payload }) => {
       list: newRow
     }
   }
-};
+}
 
-const changeSelectorSecondActionHandler = (state, { payload }) => {
-  const newRowsSec = state.secondCourses.list;
-  newRowsSec[payload.id].value = payload.value;
+const changeSecondActionHandler = (state, { payload }) => {
+  const newRowsSec = state.secondCourses.list
+  newRowsSec[payload.id].value = payload.value
 
   return {
     ...state,
@@ -49,40 +63,16 @@ const changeSelectorSecondActionHandler = (state, { payload }) => {
       list: newRowsSec
     }
   }
-};
-
-const addSelectorActionHandler = state => {
-  return {
-    ...state,
-    firstCourses: {
-      ...state.firstCourses,
-      list: [
-        ...state.firstCourses.list,
-      ]
-    }
-  }
 }
 
-const addSecondSelectorActionHandler = state => {
 
-  return {
-    ...state,
-    secondCourses: {
-      ...state.secondCourses,
-      list: [
-        ...state.secondCourses.list,
-      ]
-    }
-  }
-}
 
 export const dateReducer = handleActions(
   {
     [setOptionAction]: setOption,
-    [changeSelectorFirstAction]: changeSelectorFirstActionHandler,
-    [changeSelectorSecondAction]: changeSelectorSecondActionHandler,
-    [addSelectorFirstAction]: addSelectorActionHandler,
-    [addSecondSelectorAction]: addSecondSelectorActionHandler
+    [changeFirstAction]: changeFirstActionHandler,
+    [changeSecondAction]: changeSecondActionHandler,
+    [addCoursesAction]: addCoursesToOrderHandler,
   },
   new Course()
 )

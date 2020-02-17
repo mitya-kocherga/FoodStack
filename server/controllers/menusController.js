@@ -72,17 +72,35 @@ exports.getMenu = (req, res) => Сheck.auth(
 							price: 20
 						},
 					],
-					secondDish: [
+					dietDish: [
 						{
 							name: 'Диетическое блюдо - гречка с грибами на пару и свёкла отварная с сметаной',
 							value: 'dietDishGrechka',
 							price: 50
 						},
 					],
+					secondDish: [
+						{
+							name: 'Лапша',
+							price: 70,
+							value: 'lapsha'
+						},
+						{
+							name: 'Пюре',
+							price: 40,
+							value: 'pureshe4ka'
+						},
+						{
+							name: 'Спагетти',
+							price: 50,
+							value: 'MamaMia Spagetti'
+						}
+					],
 					salad: [
 						{
 							name: 'seledochka pod shubkoy',
 							value: 'salad',
+							dish: 'salad',
 							price: 100
 						}
 					],

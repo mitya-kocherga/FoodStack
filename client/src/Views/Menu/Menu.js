@@ -2,8 +2,8 @@ import React, {Component, Fragment} from 'react'
 import Paper from '@material-ui/core/Paper'
 
 
-import ModalMenu from '../@components/selectMenuModal'
-import {getToken} from '../../@common/getToken'
+import OrderMeal from '../@components/OrderMeal'
+import { getToken } from '../../@common/getToken'
 
 
 export default class Menu extends Component {
@@ -14,24 +14,6 @@ export default class Menu extends Component {
 	componentDidMount() {
 		this.props.actions.getOptions()
 	}
-
-	// changeHandler(e, index) {
-	// 	e.stopPropagation()
-	// 	e.preventDefault()
-	// 	this.props.actions.changeSelectorFirstAction({
-	// 		id: index,
-	// 		value: e.target.value
-	// 	})
-	// }
-
-	// changeSecondHandler(e, index) {
-	// 	e.stopPropagation();
-	// 	e.preventDefault();
-	// 	this.props.actions.changeSelectorSecondAction({
-	// 		id: index,
-	// 		value: e.target.value
-	// 	})
-	// }
 
 	addMenu(choice) { //запрос для добавления заказа
 		fetch('orders/add-order', {
@@ -46,18 +28,18 @@ export default class Menu extends Component {
 	}
 
 	render() {
-		const {classes, firstCourseSelectors} = this.props;
-		const {addSelectorAction} = this.props.actions;
-		const {firstCourseOption, secondCourseOption} = this.props;
-
-		// const { dataSelectionFirstDishes } = this.props.firstCourseOption;
 
 		return (
 			<Fragment>
 				<h1 style={{align: 'center'}}>Меню</h1>
 
-				<ModalMenu/>
+				<OrderMeal/>
 			</Fragment>
 		)
 	}
 }
+//
+// if (props.listOfOrder.length) {
+// 	const chosenCourse = props.menuList.dishes.filter(e => e === dish)
+// 	console.log('A TUTA SHO??: ', props.menuList.dishes[0].filter(e => e === dish))
+// 	return chosenCourse.length ? chosenCourse[0].name : null
