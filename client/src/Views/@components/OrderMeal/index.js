@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import { OrderMeal } from './OrderMeal'
 
+
 import {
   changeFirstAction,
   changeSecondAction,
@@ -11,7 +12,13 @@ import {
   firstCourseOption,
   secondCourseOption,
   listOfOrder,
-  menuList
+  menuList,
+  orderedFirstDishes,
+  orderedSecondDishes,
+  orderedDietDishes,
+  orderedDesertDishes,
+  orderedSaladDishes,
+  dishesOptions, deleteItemFromOrderAction
 } from '../../../@store/course'
 
 
@@ -24,7 +31,13 @@ const mapStateToProps = createStructuredSelector({
   secondCourseOption,
   addCoursesAction,
   listOfOrder,
-  menuList
+  menuList,
+  orderedFirstDishes,
+  orderedSecondDishes,
+  orderedDietDishes,
+  orderedDesertDishes,
+  orderedSaladDishes,
+  dishesOptions
 });
 
 
@@ -35,6 +48,7 @@ function mapDispatchToProps(dispatch) {
         addCoursesAction,
         changeFirstAction,
         changeSecondAction,
+        deleteItemFromOrderAction,
       },
       dispatch
     )

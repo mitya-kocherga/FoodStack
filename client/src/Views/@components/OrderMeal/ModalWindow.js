@@ -3,83 +3,94 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
+import Grid from '@material-ui/core/Grid'
+import React, { useState } from 'react'
+import Fab from '@material-ui/core/Fab'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
-import Grid from '@material-ui/core/Grid'
-import React from 'react'
 
 
-export const ModalWindow = ({ addCoursesAction, open, onClose, firstCourseOption, secondCourseOption }) => {
+export const ModalWindow = ({ listOfOrder, color, handleAddAction, handleDeleteAction, textFieldLabel, header, item, options, icon, iconDelete }) => {
+
+  const [ isOpen, setOpen ] = useState(false)
+  const [ course, setCourse ] = useState({
+    name: '',
+    price: '',
+    value: ''
+  })
+  const handleClose = () => setOpen(!isOpen)
+
+  const handleSubmitAction = (course, item) => {
+    handleAddAction(course, item)
+    setOpen(!isOpen)
+  }
+  const handleDelete = (item, id) => {
+    handleDeleteAction(item, id)
+  }
 
   const handleChange = (e, value) => {
-    value.name !== '' ? (
-    addCoursesAction({
-      type: open.course,
+    setCourse({
       name: value.name,
       price: value.price,
       value: value.value
-    })) : alert('ne rabotaet udalenie :((((')
+    })
   }
-
-  const handleClose = () => {
-    onClose()
-  }
-
-  const handleSubmit = () => {
-    onClose()
-  }
-
   return (
     <div>
-      <Dialog onClose={ handleClose } open={ open.isOpen }>
-        <DialogTitle> Выбирайте кушац </DialogTitle>
+      <Fab
+        color={ color }
+        aria-label="add"
+        size="small"
+        onClick={ handleClose }
+      >
+        { icon }
+      </Fab>
+      <Dialog onClose={ handleClose } open={ isOpen }>
+        <DialogTitle> { header } </DialogTitle>
         <table>
           <TableBody>
-            { open.course === 'firstDish' ? (
-              <TableRow>
-                <TableCell component="th" scope="row" align="center">Первое блюдо</TableCell>
-                <TableCell align="center">
+            <TableRow>
+              { listOfOrder && listOfOrder.map((item, i) =>
+                <TableCell key={ i }>
+                  { item.name }
+                  <TableRow>
+                    <Fab
+                      size="small"
+                      onClick={ () => handleDelete(item.name, i) }
+                    >{ iconDelete }
+                    </Fab>
+                  </TableRow>
+                  <hr/>
+                  <button
+                    onClick={ handleClose }
+                  >Закрой меня
+                  </button>
+                </TableCell>
+              ) }
+
+              <TableCell align="center">
+                <TableRow>
                   <Autocomplete
                     onChange={ handleChange }
-                    options={ firstCourseOption }
+                    options={ options }
                     getOptionLabel={ option => option.name }
                     renderInput={ params => (
                       <TextField
                         { ...params }
                         variant="outlined"
-                        label="Первое"
+                        label={ textFieldLabel }
                         fullWidth
-                      />
-                    )
-                    }
+                      />) }
                   />
-                </TableCell>
-              </TableRow>
-            ) : (
-              <TableRow>
-                <TableCell component="th" scope="row" align="center">Второе блюдо</TableCell>
-                <TableCell align="center">
-                  <Autocomplete
-                    onChange={ handleChange }
-                    options={ secondCourseOption }
-                    getOptionLabel={ option => option.name }
-                    renderInput={ params => (
-                      <TextField
-                        { ...params }
-                        variant="outlined"
-                        label="Второе"
-                        fullWidth
-                      />
-                    ) }
-                  />
-                </TableCell>
-              </TableRow>) }
+                </TableRow>
+              </TableCell>
+            </TableRow>
             <TableRow>
               <TableCell>
                 <Grid>
                   <button
-                    onClick={ () => handleSubmit() }>
-                    стартуем
+                    onClick={ () => handleSubmitAction(course, item) }>
+                    Подтвердить
                   </button>
                 </Grid>
               </TableCell>

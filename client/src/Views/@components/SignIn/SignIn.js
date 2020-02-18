@@ -1,16 +1,14 @@
 import React, { Fragment, useState } from 'react'
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Typography from '@material-ui/core/Typography';
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  Divider,
-  Grid,
-  TextField,
-  Typography
-} from '@material-ui/core'
 
 export const SignIn = ({ classes, signing, actions: { signInRequest, setSigning } }) => {
   const [ userName, setUserName ] = useState('')

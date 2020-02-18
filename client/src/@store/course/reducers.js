@@ -1,11 +1,12 @@
 import { handleActions } from 'redux-actions'
 
-import { Course } from './Constructors/Course'
+import { Course } from './Course'
 import {
   setOptionAction,
   changeFirstAction,
   changeSecondAction,
   addCoursesAction,
+  deleteItemFromOrderAction
 } from '../course'
 
 const setOption = (state, { payload }) => {
@@ -35,6 +36,17 @@ const addCoursesToOrderHandler = (state, {payload}) => {
         ...state.orderedCourses.list,
         payload,
         ]
+    }
+  }
+}
+
+const removeItemFromOrderHandler = (state, {payload}) => {
+  const listlist = state.orderedCourses.list.filter(order => order.name !== payload.item)
+  return {
+    ...state,
+    orderedCourses: {
+      ...state.orderedCourses,
+    list: listlist
     }
   }
 }
@@ -73,6 +85,7 @@ export const dateReducer = handleActions(
     [changeFirstAction]: changeFirstActionHandler,
     [changeSecondAction]: changeSecondActionHandler,
     [addCoursesAction]: addCoursesToOrderHandler,
+    [deleteItemFromOrderAction]: removeItemFromOrderHandler,
   },
   new Course()
 )
