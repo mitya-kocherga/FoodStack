@@ -18,7 +18,7 @@ import {
   orderedDietDishes,
   orderedDesertDishes,
   orderedSaladDishes,
-  dishesOptions, deleteItemFromOrderAction
+  dishesOptions, deleteItemFromOrderAction, currentDish
 } from '../../../@store/course'
 
 
@@ -37,7 +37,8 @@ const mapStateToProps = createStructuredSelector({
   orderedDietDishes,
   orderedDesertDishes,
   orderedSaladDishes,
-  dishesOptions
+  dishesOptions,
+  currentDish
 });
 
 

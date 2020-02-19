@@ -3,8 +3,4 @@ export const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  Table: {
-    border: 'none',
-    color: 'pink'
-  }
 });

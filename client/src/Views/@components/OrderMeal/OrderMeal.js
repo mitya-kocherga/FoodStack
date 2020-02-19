@@ -7,14 +7,49 @@ import Table from '@material-ui/core/Table'
 import Button from '@material-ui/core/Button'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { TableHead } from '@material-ui/core'
-
+import Typography from '@material-ui/core/Typography'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import { withStyles, makeStyles } from '@material-ui/core/styles'
 
 import { showOrderedCourses } from './showOrderedCourses'
 import { ModalWindow } from './ModalWindow'
+import Paper from '@material-ui/core/Paper'
+import { listOfOrder } from '../../../@store/course'
+import { logIn } from '../../../@store/Auth'
 
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white
+  },
+  body: {
+    fontSize: 14
+  }
+}))(TableCell)
+
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default
+    }
+  }
+}))(TableRow)
+
+const useStyles = makeStyles({
+  table: {
+    width: 800,
+    maxWidth: 1000
+  },
+  paperDefault: {
+    width: 800,
+    maxWidth: 1000,
+    margin: 'auto'
+  }
+})
 
 export const OrderMeal = (props) => {
+  const classes = useStyles()
 
   const handleAddAction = (course, item) => {
     props.actions.addCoursesAction({
@@ -26,62 +61,82 @@ export const OrderMeal = (props) => {
   }
 
   const handleDeleteAction = (item, id) => {
-  props.actions.deleteItemFromOrderAction({
-    item,
-    id
-  })
+    props.actions.deleteItemFromOrderAction({
+      item,
+      id
+    })
   }
 
   const handleChangeAction = () => {
+
+  }
+
+  const totalPrice = () => {
+    let sum = 0
+    for (let i = 0; i < props.listOfOrder.length; i++) {
+      sum += props.listOfOrder[i].price
+    }
+    return (<p>Общая стоимость: { sum } рубасиков</p>)
   }
 
   return (
-    <Fragment>
-      <Table className={ props.classes.Table }>
+    <TableContainer className={ classes.paperDefault } component={ Paper }>
+      <Table className={ classes.table }>
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>Блюдо: </StyledTableCell>
+            <StyledTableCell align="center">Предварительный заказ: </StyledTableCell>
+            <StyledTableCell/>
+          </TableRow>
+        </TableHead>
         <TableBody>
-          <TableHead>
-            <TableCell component="th" scope="row" align="center">Блюдо: </TableCell>
-            <TableCell component="th" scope="row" align="center">Предварительный заказ: </TableCell>
-          </TableHead>
           { props.menuList.length ? props.menuList.map((item, i) => {
             return (
-              <TableRow key={ i }>
-                <TableCell component="th" scope="row" align="center">{ item } </TableCell>
-                <TableCell>
-                  <p>
-                    Выбранное кушац: { showOrderedCourses(item, props) }
-                  </p>
-                  { props.dishesOptions[item] && props.dishesOptions[item].length !== 0 ? (
+              <StyledTableRow key={ i }>
+                <StyledTableCell component="th" scope="row">{ item } </StyledTableCell>
+                { props.dishesOptions[item] && props.dishesOptions[item].length !== 0 ? (
                     <Fragment>
-                      <ModalWindow
-                        item={ item }
-                        addCoursesAction={ props.actions.addCoursesAction }
-                        options={ props.dishesOptions[item] }
-                        header="Добавить еду"
-                        icon={ <AddIcon/> }
-                        // textFieldLabel={}
-                        handleAddAction={ handleAddAction }
-                      />
-                      <ModalWindow
-                        handleDeleteAction = { handleDeleteAction}
-                        item={ item }
-                        options={ props.dishesOptions[item] }
-                        header='изменить выбор'
-                        iconDelete={ <DeleteIcon/>}
-                        icon={ <EditIcon/> }
-                        color="primary"
-                        listOfOrder={props.listOfOrder}
-                        // textFieldLabel={}
-                      />
+                      <StyledTableCell align="center">
+                        Выбранное блюдо:
+                        <TableRow>{ showOrderedCourses(item, props) }</TableRow>
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        <ModalWindow
+                          item={ item }
+                          addCoursesAction={ props.actions.addCoursesAction }
+                          options={ props.dishesOptions[item] }
+                          header={"Добавить блюдо"}
+                          icon={ <AddIcon/> }
+                          handleAddAction={ handleAddAction }
+                        />
+                        <ModalWindow
+                          currentDish = {props.currentDish[item]}
+                          props = {props}
+                          handleDeleteAction={ handleDeleteAction }
+                          item={ item }
+                          options={ props.dishesOptions[item] }
+                          header='Изменить выбор'
+                          iconDelete={ <DeleteIcon/> }
+                          icon={ <EditIcon/> }
+                          color="primary"
+                          listOfOrder={ props.listOfOrder }
+                        />
+                      </StyledTableCell>
                     </Fragment>
-                  ) : 'there is no dishes this type for today' }
-                </TableCell>
-              </TableRow>
+                  ) :
+                  <StyledTableCell align="center">'there is no dishes this type for today' </StyledTableCell>
+                }
+              </StyledTableRow>
             )
           }) : 'Tut nichego net' }
-
-          <TableRow align="center">
-            <TableCell>
+          <StyledTableRow>
+            <StyledTableCell/>
+            <StyledTableCell/>
+            <StyledTableCell align="right">{ totalPrice() }</StyledTableCell>
+          </StyledTableRow>
+          <StyledTableRow>
+            <StyledTableCell/>
+            <StyledTableCell align="center">
               <Button
                 color="secondary"
                 variant="contained"
@@ -89,24 +144,15 @@ export const OrderMeal = (props) => {
               >
                 Заказать
               </Button>
-            </TableCell>
-          </TableRow>
+            </StyledTableCell>
+            <StyledTableCell/>
+
+          </StyledTableRow>
         </TableBody>
       </Table>
-    </Fragment>
+    </TableContainer>
   )
 }
-// actions: {addSelectorFirstAction}
-//   props.orderedFirstDishes && props.orderedFirstDishes.map(dish => (
-//   item === 'firstDish' ? <span>{dish.name}</span> : 'pusto'
-// ))
-//   switch (item): {
-//   case 'firstDish': props.orderedFirstDishes && props.orderedFirstDishes.map(dish => item === dish.type ? <span>{ dish.name }</span> : 'nothing here');
-//   case 'secondDish': ;
-//   case 'dietDish': ;
-//   case 'desertDish': ;
-//   case 'salad': ;
-//   default: '' }
 
 
 
