@@ -2,20 +2,14 @@ import { createSelector } from 'reselect'
 
 const baseState = state => state.dateReducer
 
-export const firstCourseOption = createSelector(
-  baseState, firstOption => firstOption.optionFirstCourse.dataSelectionFirstDishes)
-
-export const secondCourseOption = createSelector(
-  baseState, secondOption => secondOption.optionSecondCourse.dataSelectionSecondDishes)
+export const dishesOptions = createSelector(
+  baseState, (state) => state.dishOptions)
 
 export const menuList = createSelector(
   baseState, listOfMenu => listOfMenu.menu.dishes)
 
-export const dishesOptions = createSelector(
-  [ firstCourseOption, secondCourseOption ], (first, second) => ({ firstDish: first, secondDish: second }))
-
 export const listOfOrder = createSelector(
-  baseState, listOrderedCourses => listOrderedCourses.orderedCourses.list)
+  baseState, listOrderedCourses => listOrderedCourses.orderedCourses)
 
 export const orderedFirstDishes = createSelector(
   listOfOrder, list => list.filter(item => item.type === 'firstDish'))
@@ -33,7 +27,13 @@ export const orderedDesertDishes = createSelector(
   listOfOrder, list => list.filter(item => item.type === 'desert'))
 
 export const currentDish = createSelector(
-  [ orderedFirstDishes, orderedSecondDishes, orderedDietDishes, orderedSaladDishes, orderedDesertDishes ], (first, second, dietDish, salad, desert) =>
+  [
+    orderedFirstDishes,
+    orderedSecondDishes,
+    orderedDietDishes,
+    orderedSaladDishes,
+    orderedDesertDishes
+  ], (first, second, dietDish, salad, desert) =>
     ({
       firstDish: first,
       secondDish: second,

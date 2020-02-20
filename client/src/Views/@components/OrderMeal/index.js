@@ -9,8 +9,8 @@ import {
   changeFirstAction,
   changeSecondAction,
   addCoursesAction,
-  firstCourseOption,
-  secondCourseOption,
+  // firstCourseOption,
+  // secondCourseOption,
   listOfOrder,
   menuList,
   orderedFirstDishes,
@@ -27,8 +27,6 @@ import { withStyles } from '@material-ui/core/styles'
 import { styles } from './styles'
 
 const mapStateToProps = createStructuredSelector({
-  firstCourseOption,
-  secondCourseOption,
   addCoursesAction,
   listOfOrder,
   menuList,

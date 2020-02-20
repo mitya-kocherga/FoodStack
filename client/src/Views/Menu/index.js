@@ -9,16 +9,18 @@ import {
   setOptionAction,
   changeFirstAction,
   changeSecondAction,
-  firstCourseOption,
-  secondCourseOption,
+  dishesOptions,
+  // firstCourseOption,
+  // secondCourseOption,
 } from '../../@store/course'
 
 import { getOptions } from '../../@store/course/thunk';
 
 
 const mapStateToProps = createStructuredSelector({
-  firstCourseOption,
-  secondCourseOption,
+  dishesOptions
+  // firstCourseOption,
+  // secondCourseOption,
 })
 
 function mapDispatchToProps(dispatch) {

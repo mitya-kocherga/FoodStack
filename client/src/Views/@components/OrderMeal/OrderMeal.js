@@ -7,21 +7,19 @@ import Table from '@material-ui/core/Table'
 import Button from '@material-ui/core/Button'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
-import Typography from '@material-ui/core/Typography'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
 
-import { showOrderedCourses } from './showOrderedCourses'
+import { showNamesOfOrderedCourses } from './showNamesOfOrderedCourses'
 import { ModalWindow } from './ModalWindow'
+import { ConfirmOrderModalTable } from './confirmOrderModalTable'
 import Paper from '@material-ui/core/Paper'
-import { listOfOrder } from '../../../@store/course'
-import { logIn } from '../../../@store/Auth'
+import TextField from '@material-ui/core/TextField'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white
+    backgroundColor: '#BCF5BB'
   },
   body: {
     fontSize: 14
@@ -38,12 +36,15 @@ const StyledTableRow = withStyles(theme => ({
 
 const useStyles = makeStyles({
   table: {
-    width: 800,
-    maxWidth: 1000
+    width: 1000,
+    maxWidth: 1200
+  },
+  buttonAdd: {
+    backgroundColor: '#BCF5BB'
   },
   paperDefault: {
-    width: 800,
-    maxWidth: 1000,
+    width: 1000,
+    maxWidth: 1200,
     margin: 'auto'
   }
 })
@@ -54,9 +55,7 @@ export const OrderMeal = (props) => {
   const handleAddAction = (course, item) => {
     props.actions.addCoursesAction({
       type: item,
-      name: course.name,
-      price: course.price,
-      value: course.value
+      ...course
     })
   }
 
@@ -67,10 +66,6 @@ export const OrderMeal = (props) => {
     })
   }
 
-  const handleChangeAction = () => {
-
-  }
-
   const totalPrice = () => {
     let sum = 0
     for (let i = 0; i < props.listOfOrder.length; i++) {
@@ -78,7 +73,6 @@ export const OrderMeal = (props) => {
     }
     return (<p>Общая стоимость: { sum } рубасиков</p>)
   }
-
   return (
     <TableContainer className={ classes.paperDefault } component={ Paper }>
       <Table className={ classes.table }>
@@ -92,26 +86,27 @@ export const OrderMeal = (props) => {
         <TableBody>
           { props.menuList.length ? props.menuList.map((item, i) => {
             return (
+
               <StyledTableRow key={ i }>
                 <StyledTableCell component="th" scope="row">{ item } </StyledTableCell>
                 { props.dishesOptions[item] && props.dishesOptions[item].length !== 0 ? (
                     <Fragment>
                       <StyledTableCell align="center">
                         Выбранное блюдо:
-                        <TableRow>{ showOrderedCourses(item, props) }</TableRow>
+                        <TableRow>{ showNamesOfOrderedCourses(item, props) }</TableRow>
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         <ModalWindow
                           item={ item }
                           addCoursesAction={ props.actions.addCoursesAction }
                           options={ props.dishesOptions[item] }
-                          header={"Добавить блюдо"}
+                          header={ 'Добавить блюдо' }
                           icon={ <AddIcon/> }
                           handleAddAction={ handleAddAction }
                         />
                         <ModalWindow
-                          currentDish = {props.currentDish[item]}
-                          props = {props}
+                          currentDish={ props.currentDish[item] }
+                          props={ props }
                           handleDeleteAction={ handleDeleteAction }
                           item={ item }
                           options={ props.dishesOptions[item] }
@@ -134,16 +129,22 @@ export const OrderMeal = (props) => {
             <StyledTableCell/>
             <StyledTableCell align="right">{ totalPrice() }</StyledTableCell>
           </StyledTableRow>
+          <TableRow>
+            <TableCell>
+              <p>Адрес доставки</p>
+              <TextField id="standard-basic" label="Standard"/>
+            </TableCell>
+            <TableCell/>
+            <TableCell/>
+          </TableRow>
           <StyledTableRow>
             <StyledTableCell/>
             <StyledTableCell align="center">
-              <Button
-                color="secondary"
-                variant="contained"
-                // onClick={() => this.addMenu(firstCourseSelectors)}//запрос для добавления заказа
-              >
-                Заказать
-              </Button>
+
+              <ConfirmOrderModalTable
+                listOfOrder={ props.listOfOrder }
+              />
+
             </StyledTableCell>
             <StyledTableCell/>
 

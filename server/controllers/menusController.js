@@ -87,23 +87,40 @@ exports.getMenu = (req, res) => Сheck.auth(
 							name: 'Спагетти',
 							price: 50,
 							value: 'MamaMiaSpagetti'
+						},
+						{
+							name: 'Свинина жареная с свежими овощами',
+							price: 150,
+							value: 'Pig'
 						}
 					],
 					dietDish: [
-					{
-						name: 'Диетическое блюдо - гречка с грибами на пару и свёкла отварная с сметаной',
-						value: 'dietDishGrechka',
-						price: 50
-					},
-				],
+						{
+							name: 'Д/б Гречка с курицей и свежими овощами',
+							value: 'dietDishGrechka',
+							price: 50
+						},
+					],
 					salad: [
 						{
 							name: 'seledochka pod shubkoy',
 							value: 'salad',
-							dish: 'salad',
 							price: 100
 						}
 					],
+					desert: [
+						{
+							name: 'пирожОчек',
+							value: 'pirozhochek',
+							price: 20
+						},
+						{
+							name: 'Бисквит домашний с кремом',
+							value: 'biscuit',
+							price: 40
+						}
+					]
+
 				},
 			)
 				.catch(err => res.status(400).send({message: 'Something went wrong.', error: err}))

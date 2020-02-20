@@ -4,15 +4,13 @@ export class Course {
     dishes: []
   }
 
-  orderedCourses = {
-    list: []
-  }
+  orderedCourses = []
 
-  optionFirstCourse = {
-    dataSelectionFirstDishes: []
-  }
-
-  optionSecondCourse = {
-    dataSelectionSecondDishes: []
+  dishOptions = {
+    firstDish: [],
+    secondDish: [],
+    salad: [],
+    dietDish: [],
+    desert: []
   }
 }

@@ -10,7 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import { TableHead } from '@material-ui/core'
 
 
-import { showOrderedCourses } from './showOrderedCourses'
+import { showNamesOfOrderedCourses } from './showNamesOfOrderedCourses'
 import { ModalWindow } from './ModalWindow'
 
 
@@ -73,7 +73,7 @@ export const OrderMeal = (props) => {
                     />
                     <TableRow>
                       <p>
-                        Выбранное блюдо: { showOrderedCourses(item, props) }
+                        Выбранное блюдо: { showNamesOfOrderedCourses(item, props) }
                       </p>
                     </TableRow>
                   </Fragment>

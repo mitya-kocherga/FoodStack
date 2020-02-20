@@ -6,7 +6,8 @@ import Fab from '@material-ui/core/Fab'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
-import { showOrderedCourses } from './showOrderedCourses'
+import { showNamesOfOrderedCourses } from './showNamesOfOrderedCourses'
+import Button from '@material-ui/core/Button'
 
 
 export const ModalWindow = ({ currentDish, props, listOfOrder, color, handleAddAction, handleDeleteAction, textFieldLabel, header, item, options, icon, iconDelete }) => {
@@ -42,42 +43,30 @@ export const ModalWindow = ({ currentDish, props, listOfOrder, color, handleAddA
       color: 'grey',
       textAlign: 'center'
     }
-  }));
+  }))
 
-  const classes = useStyles();
-  const [ isOpen, setOpen ] = useState(false);
+  const classes = useStyles()
+  const [ isOpen, setOpen ] = useState(false)
   const [ course, setCourse ] = useState({
     name: '',
     price: '',
     value: ''
-  });
+  })
 
   const handleOpenAndClose = () => setOpen(!isOpen)
 
   const handleSubmitAction = (course, item) => {
     handleAddAction(course, item)
     setOpen(!isOpen)
-  };
+  }
   const handleDelete = (item, id) => {
     handleDeleteAction(item, id)
-  };
+  }
 
   const handleChange = (e, value) => {
-    setCourse({
-      name: value.name,
-      price: value.price,
-      value: value.value
-    })
-  };
-  //переписать, не работает корректно...
-  const currentDisha = () => {
-    let name = 0
-    if (currentDish.length) {
-      name = currentDish[0].name
-    }
-    return (<p>блюдо: { name } </p>)
+    setCourse({ ...value })
   }
-  //
+
   return (
     <Fragment>
       <Fab
@@ -92,8 +81,9 @@ export const ModalWindow = ({ currentDish, props, listOfOrder, color, handleAddA
         <DialogTitle className={ classes.dialogTitle }> { header } </DialogTitle>
         { icon.type.displayName === 'EditIcon' ? (
             <Fragment>
-              { listOfOrder && listOfOrder.map((item, i) =>
+              { listOfOrder && currentDish.map((item, i) =>
                 <Grid
+                  key={ i }
                   className={ classes.listOfOrderModal }
                   container
                   direction="row"
@@ -103,10 +93,9 @@ export const ModalWindow = ({ currentDish, props, listOfOrder, color, handleAddA
                   <Grid
                     xs
                     item
-                    key={ i }
                     className={ classes.dish }
                   >
-                    { currentDisha() }
+                    { item.name }
                   </Grid>
                   <Grid>
                     { item.price } руб.
@@ -121,12 +110,12 @@ export const ModalWindow = ({ currentDish, props, listOfOrder, color, handleAddA
                     >{ iconDelete }
                     </Fab>
                   </Grid>
-                </Grid> )  }
+                </Grid>) }
               <div className={ classes.buttonClose }>
-                <button
+                <Button
                   onClick={ handleOpenAndClose }
                 >Закрыть
-                </button>
+                </Button>
               </div>
             </Fragment>
           ) :
@@ -157,10 +146,10 @@ export const ModalWindow = ({ currentDish, props, listOfOrder, color, handleAddA
               item
               className={ classes.buttonClose }
             >
-              <button
+              <Button
                 onClick={ () => handleSubmitAction(course, item) }>
                 Подтвердить
-              </button>
+              </Button>
             </Grid>
           </Grid>
 

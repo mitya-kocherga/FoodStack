@@ -12,13 +12,13 @@ import {
 const setOption = (state, { payload }) => {
   return {
     ...state,
-    optionFirstCourse: {
-      ...state.optionFirstCourse,
-      dataSelectionFirstDishes: payload.firstDish
-    },
-    optionSecondCourse: {
-      ...state.optionSecondCourse,
-      dataSelectionSecondDishes: payload.secondDish
+    dishOptions: {
+      ...state.dishOptions,
+      firstDish: payload.firstDish,
+      secondDish: payload.secondDish,
+      salad: payload.salad,
+      dietDish: payload.dietDish,
+      desert: payload.desert
     },
     menu: {
       ...state.menu,
@@ -27,27 +27,21 @@ const setOption = (state, { payload }) => {
   }
 }
 
-const addCoursesToOrderHandler = (state, {payload}) => {
+const addCoursesToOrderHandler = (state, { payload }) => {
   return {
     ...state,
-    orderedCourses: {
+    orderedCourses: [
       ...state.orderedCourses,
-      list: [
-        ...state.orderedCourses.list,
-        payload,
-        ]
-    }
+      payload
+    ]
   }
 }
 
-const removeItemFromOrderHandler = (state, {payload}) => {
-  const listlist = state.orderedCourses.list.filter(order => order.name !== payload.item)
+const removeItemFromOrderHandler = (state, { payload }) => {
+  const list = state.orderedCourses.filter(order => order.name !== payload.item)
   return {
     ...state,
-    orderedCourses: {
-      ...state.orderedCourses,
-    list: listlist
-    }
+    orderedCourses: list
   }
 }
 
@@ -78,14 +72,13 @@ const changeSecondActionHandler = (state, { payload }) => {
 }
 
 
-
 export const dateReducer = handleActions(
   {
     [setOptionAction]: setOption,
     [changeFirstAction]: changeFirstActionHandler,
     [changeSecondAction]: changeSecondActionHandler,
     [addCoursesAction]: addCoursesToOrderHandler,
-    [deleteItemFromOrderAction]: removeItemFromOrderHandler,
+    [deleteItemFromOrderAction]: removeItemFromOrderHandler
   },
   new Course()
 )
