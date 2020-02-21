@@ -26,7 +26,6 @@ export default class Login extends Component {
             </Grid>
             <Grid item>
               <TextField
-                id="outlined-name"
                 label="Name"
                 onChange={ e => this.setState({userName: e.target.value})}
                 margin="normal"
@@ -36,7 +35,6 @@ export default class Login extends Component {
             </Grid>
             <Grid item>
               <TextField
-              id="outlined-password-input"
               label="Password"
               autoComplete="current-password"
               type="password"

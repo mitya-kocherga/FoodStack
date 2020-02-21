@@ -1,32 +1,14 @@
 import React, {Component, Fragment} from 'react'
-
-
-
 import OrderMeal from '../@components/OrderMeal'
-import { getToken } from '../../@common/getToken'
 
 
 export default class Menu extends Component {
 	state = {
 		selectedDate: new Date()
 	};
-
 	componentDidMount() {
 		this.props.actions.getOptions()
 	}
-
-	addMenu(choice) { //запрос для добавления заказа
-		fetch('orders/add-order', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json',
-				'token': getToken()
-			},
-			body: JSON.stringify({userName: 'WasyanPRRO$$$', choice, userID: '5cb6de0241fe3b7eb59c5db2'})
-		}).catch(error => console.error(error))
-	}
-
 	render() {
 
 		return (

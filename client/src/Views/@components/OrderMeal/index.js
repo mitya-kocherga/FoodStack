@@ -6,11 +6,8 @@ import { OrderMeal } from './OrderMeal'
 
 
 import {
-  changeFirstAction,
-  changeSecondAction,
+
   addCoursesAction,
-  // firstCourseOption,
-  // secondCourseOption,
   listOfOrder,
   menuList,
   orderedFirstDishes,
@@ -25,8 +22,12 @@ import {
 import { withStyles } from '@material-ui/core/styles'
 
 import { styles } from './styles'
+import { makeOrder } from '../../../@store/order/thunk/makeOrder'
+import { usersOrderSelector } from '../../../@store/order'
+import { ModalWindow } from './ModalWindow'
 
 const mapStateToProps = createStructuredSelector({
+  usersOrderSelector,
   addCoursesAction,
   listOfOrder,
   menuList,
@@ -45,9 +46,8 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(
       {
         addCoursesAction,
-        changeFirstAction,
-        changeSecondAction,
         deleteItemFromOrderAction,
+        makeOrder
       },
       dispatch
     )

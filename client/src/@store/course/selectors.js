@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-const baseState = state => state.dateReducer
+const baseState = state => state.courseReducer
 
 export const dishesOptions = createSelector(
   baseState, (state) => state.dishOptions)

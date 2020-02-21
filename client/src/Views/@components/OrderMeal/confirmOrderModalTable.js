@@ -6,51 +6,28 @@ import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
-import { TableHead } from '@material-ui/core'
 import TableContainer from '@material-ui/core/TableContainer'
 import Paper from '@material-ui/core/Paper'
-import TextField from '@material-ui/core/TextField'
+import Grid from '@material-ui/core/Grid'
 
+import pic from './common/nothing_here.png'
 
 const StyledTableCell = withStyles(theme => ({
   body: {
     fontSize: 14
   }
-}))(TableCell)
-
+}))(TableCell);
 const StyledTableRow = withStyles(theme => ({
   root: {
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default
     }
   }
-}))(TableRow)
+}))(TableRow);
 
-const useStyles = makeStyles({
-  rootDialog: {},
-  listOfOrderModal: {
-    width: 400,
-    margin: 20
-  },
-  divButtonAdd: {
-    margin: 10,
-    textAlign: 'center'
-  },
-  buttonAdd: {
-    backgroundColor: '#BCF5BB'
-  },
-  tableTitle: {
-    textAlign: 'center'
-  },
-  tableItem: {
-    textAlign: 'end'
-  }
-})
-
-export const ConfirmOrderModalTable = ({ listOfOrder }) => {
-  const [ isOpen, setOpen ] = useState(false)
-  const classes = useStyles()
-  const handleOpenAndClose = () => setOpen(!isOpen)
+export const ConfirmOrderModalTable = ({ classes, handleMakeOrderAction, listOfOrder, address }) => {
+  const [ isOpen, setOpen ] = useState(false);
+  const handleOpenAndClose = () => setOpen(!isOpen);
 
   const totalPrice = () => {
     let sum = 0
@@ -58,12 +35,16 @@ export const ConfirmOrderModalTable = ({ listOfOrder }) => {
       sum += listOfOrder[i].price
     }
     return (<p>Общая стоимость: { sum } рубасиков</p>)
-  }
+  };
+
+  const addNewOrder = (payload) => {
+    handleMakeOrderAction(payload)
+  };
 
   return (
     <Fragment>
       <Button
-        className={ classes.buttonAdd }
+        className={ classes.button }
         variant="contained"
         onClick={ handleOpenAndClose }
       >
@@ -72,11 +53,9 @@ export const ConfirmOrderModalTable = ({ listOfOrder }) => {
       <Dialog onClose={ handleOpenAndClose } open={ isOpen } className={ classes.rootDialog }>
         { listOfOrder.length !== 0 ?
           <div>
+            <p className={ classes.tableTitle }>Важ заказ </p>
             <TableContainer className={ classes.listOfOrderModal } component={ Paper }>
               <Table className={ classes.table }>
-                <TableHead>
-                  <TableRow className={ classes.tableTitle }>Важ заказ </TableRow>
-                </TableHead>
                 <TableBody>
                   { listOfOrder.map((item, i) =>
                     <StyledTableRow className={ classes.listOfOrderModal } key={ i }>
@@ -86,20 +65,74 @@ export const ConfirmOrderModalTable = ({ listOfOrder }) => {
                     </StyledTableRow>
                   ) }
                   <TableRow>
-                    <TableCell align="end">{ totalPrice() }</TableCell>
+                    <TableCell>
+                      Адрес доставки:
+                      <p>
+                        { address }
+                      </p>
+                    </TableCell>
+                    <TableCell/>
                   </TableRow>
+                  <StyledTableRow>
+                    <StyledTableCell align="end">
+                      { totalPrice() }
+                    </StyledTableCell>
+                    <StyledTableCell/>
+                  </StyledTableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-            <div className={classes.divButtonAdd}>
-              <Button className={ classes.buttonAdd }
-                // onClick={() => addMenu(firstCourseSelectors)}//запрос для добавления заказа
-              >
-                Подтвердить заказ
-              </Button>
+            <div align="center">
+              <div className={ classes.divButtonAdd }>
+                <Button
+                  variant="contained"
+                  className={ classes.button }
+                  onClick={ () => addNewOrder(listOfOrder) }
+                >
+                  Подтвердить заказ
+                </Button>
+                <div className={ classes.divButtonAdd }>
+                  <Button
+                    className={ classes.button }
+                    variant="contained"
+                    onClick={ handleOpenAndClose }
+                  >
+                    Вернуться..
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
-          : 'Tuta nichego' }
+          :
+          <Grid
+            className={ classes.modalWithoutOrder }
+            container spacing={ 3 }
+            justify="center"
+            alignItems="center"
+          >
+            <Grid
+              xs={ 5 }
+              item>
+              Сначала выбери покушац
+            </Grid>
+            <Grid
+              item
+            >
+              <img className={ classes.pic } src={ pic } alt='police_from_SP'/>
+            </Grid>
+            <Grid
+              item
+            >
+              <Button
+                variant="contained"
+                className={ classes.button }
+                onClick={ handleOpenAndClose }
+              >
+                Вернуться..
+              </Button>
+            </Grid>
+          </Grid>
+        }
       </Dialog>
     </Fragment>
   )

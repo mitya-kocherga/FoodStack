@@ -5,68 +5,36 @@ import React, { Fragment, useState } from 'react'
 import Fab from '@material-ui/core/Fab'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
-import { makeStyles } from '@material-ui/core/styles'
-import { showNamesOfOrderedCourses } from './showNamesOfOrderedCourses'
 import Button from '@material-ui/core/Button'
 
 
-export const ModalWindow = ({ currentDish, props, listOfOrder, color, handleAddAction, handleDeleteAction, textFieldLabel, header, item, options, icon, iconDelete }) => {
-
-  const useStyles = makeStyles(theme => ({
-    listOfOrderModal: {
-      flexGrow: 1,
-      width: 400,
-      margin: 10,
-      borderRadius: 3,
-      boxShadow: '0 3px 3px 0 grey'
-    },
-    addDishModal: {
-      flexGrow: 1,
-      width: 400,
-      margin: 10
-    },
-    dish: {
-      padding: theme.spacing(1),
-      margin: 10
-    },
-    buttonDelete: {
-      margin: 10
-    },
-    buttonClose: {
-      padding: theme.spacing(1),
-      textAlign: 'center'
-    },
-    rootDialog: {
-      padding: 10
-    },
-    dialogTitle: {
-      color: 'grey',
-      textAlign: 'center'
-    }
-  }))
-
-  const classes = useStyles()
-  const [ isOpen, setOpen ] = useState(false)
+export const ModalWindow = ({classes, currentDish, listOfOrder, color, handleAddAction, handleDeleteAction, textFieldLabel, header, item, options, icon, iconDelete }) => {
+  const [ isOpen, setOpen ] = useState(false);
   const [ course, setCourse ] = useState({
     name: '',
     price: '',
     value: ''
-  })
-
-  const handleOpenAndClose = () => setOpen(!isOpen)
+  });
+  const handleOpenAndClose = () => setOpen(!isOpen);
 
   const handleSubmitAction = (course, item) => {
     handleAddAction(course, item)
     setOpen(!isOpen)
-  }
+    setCourse({
+      name: '',
+      price: '',
+      value: ''
+    })
+  };
   const handleDelete = (item, id) => {
     handleDeleteAction(item, id)
-  }
-
+  };
   const handleChange = (e, value) => {
     setCourse({ ...value })
-  }
-
+  };
+  const checkValidation = () => {
+    return !course.value.trim()
+  };
   return (
     <Fragment>
       <Fab
@@ -111,8 +79,10 @@ export const ModalWindow = ({ currentDish, props, listOfOrder, color, handleAddA
                     </Fab>
                   </Grid>
                 </Grid>) }
-              <div className={ classes.buttonClose }>
+              <div className={classes.gridButton}>
                 <Button
+                  className={ classes.button }
+                  variant="contained"
                   onClick={ handleOpenAndClose }
                 >Закрыть
                 </Button>
@@ -144,15 +114,18 @@ export const ModalWindow = ({ currentDish, props, listOfOrder, color, handleAddA
             </Grid>
             <Grid
               item
-              className={ classes.buttonClose }
+              className={ classes.gridButton }
+
             >
               <Button
+                variant="contained"
+                className={ classes.button }
+                disabled={ checkValidation() }
                 onClick={ () => handleSubmitAction(course, item) }>
                 Подтвердить
               </Button>
             </Grid>
           </Grid>
-
         }
       </Dialog>
     </Fragment>

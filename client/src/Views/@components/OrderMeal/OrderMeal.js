@@ -4,18 +4,18 @@ import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import TableBody from '@material-ui/core/TableBody'
 import Table from '@material-ui/core/Table'
-import Button from '@material-ui/core/Button'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
-
-import { showNamesOfOrderedCourses } from './showNamesOfOrderedCourses'
-import { ModalWindow } from './ModalWindow'
-import { ConfirmOrderModalTable } from './confirmOrderModalTable'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
+
+
+import { showNamesOfOrderedCourses } from './common/showNamesOfOrderedCourses'
+import { ModalWindow } from './ModalWindow'
+import { ConfirmOrderModalTable } from './confirmOrderModalTable'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -34,23 +34,12 @@ const StyledTableRow = withStyles(theme => ({
   }
 }))(TableRow)
 
-const useStyles = makeStyles({
-  table: {
-    width: 1000,
-    maxWidth: 1200
-  },
-  buttonAdd: {
-    backgroundColor: '#BCF5BB'
-  },
-  paperDefault: {
-    width: 1000,
-    maxWidth: 1200,
-    margin: 'auto'
-  }
-})
-
 export const OrderMeal = (props) => {
-  const classes = useStyles()
+  const [ address, setAddress ] = useState('')
+
+  const handleChangeAddress = (e) => {
+    setAddress(e.target.value)
+  }
 
   const handleAddAction = (course, item) => {
     props.actions.addCoursesAction({
@@ -59,23 +48,19 @@ export const OrderMeal = (props) => {
     })
   }
 
+  const handleMakeOrderAction = (payload) => {
+    props.actions.makeOrder(payload)
+  }
+
   const handleDeleteAction = (item, id) => {
     props.actions.deleteItemFromOrderAction({
       item,
       id
     })
   }
-
-  const totalPrice = () => {
-    let sum = 0
-    for (let i = 0; i < props.listOfOrder.length; i++) {
-      sum += props.listOfOrder[i].price
-    }
-    return (<p>Общая стоимость: { sum } рубасиков</p>)
-  }
   return (
-    <TableContainer className={ classes.paperDefault } component={ Paper }>
-      <Table className={ classes.table }>
+    <TableContainer className={ props.classes.paperDefault } component={ Paper }>
+      <Table className={ props.classes.mainTable }>
         <TableHead>
           <TableRow>
             <StyledTableCell>Блюдо: </StyledTableCell>
@@ -87,16 +72,17 @@ export const OrderMeal = (props) => {
           { props.menuList.length ? props.menuList.map((item, i) => {
             return (
 
-              <StyledTableRow key={ i }>
-                <StyledTableCell component="th" scope="row">{ item } </StyledTableCell>
+              <StyledTableRow key={ i } size="small" hover="true">
+                <StyledTableCell className={ props.classes.tableCellTypeOfDish } component="th"
+                                 scope="row">{ item } </StyledTableCell>
                 { props.dishesOptions[item] && props.dishesOptions[item].length !== 0 ? (
                     <Fragment>
-                      <StyledTableCell align="center">
-                        Выбранное блюдо:
+                      <StyledTableCell className={ props.classes.tableCellDishes } align="center">
                         <TableRow>{ showNamesOfOrderedCourses(item, props) }</TableRow>
                       </StyledTableCell>
-                      <StyledTableCell align="right">
+                      <StyledTableCell className={ props.classes.tableCellButtons } align="right">
                         <ModalWindow
+                          classes={ props.classes }
                           item={ item }
                           addCoursesAction={ props.actions.addCoursesAction }
                           options={ props.dishesOptions[item] }
@@ -105,6 +91,7 @@ export const OrderMeal = (props) => {
                           handleAddAction={ handleAddAction }
                         />
                         <ModalWindow
+                          classes={ props.classes }
                           currentDish={ props.currentDish[item] }
                           props={ props }
                           handleDeleteAction={ handleDeleteAction }
@@ -119,20 +106,20 @@ export const OrderMeal = (props) => {
                       </StyledTableCell>
                     </Fragment>
                   ) :
-                  <StyledTableCell align="center">'there is no dishes this type for today' </StyledTableCell>
+                  <StyledTableCell align="center">
+                    'there is no dishes this type for today'
+                  </StyledTableCell>
                 }
               </StyledTableRow>
             )
           }) : 'Tut nichego net' }
-          <StyledTableRow>
-            <StyledTableCell/>
-            <StyledTableCell/>
-            <StyledTableCell align="right">{ totalPrice() }</StyledTableCell>
-          </StyledTableRow>
           <TableRow>
             <TableCell>
               <p>Адрес доставки</p>
-              <TextField id="standard-basic" label="Standard"/>
+              <TextField
+                onChange={ e => handleChangeAddress(e) }
+                label="Введите адрес"
+              />
             </TableCell>
             <TableCell/>
             <TableCell/>
@@ -140,14 +127,14 @@ export const OrderMeal = (props) => {
           <StyledTableRow>
             <StyledTableCell/>
             <StyledTableCell align="center">
-
               <ConfirmOrderModalTable
+                classes={ props.classes }
+                handleMakeOrderAction={ handleMakeOrderAction }
+                address={ address }
                 listOfOrder={ props.listOfOrder }
               />
-
             </StyledTableCell>
             <StyledTableCell/>
-
           </StyledTableRow>
         </TableBody>
       </Table>
