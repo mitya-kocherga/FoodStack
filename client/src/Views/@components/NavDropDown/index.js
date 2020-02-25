@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { NavDropDown } from './NavDropDown';
 import { styles } from './styles';
-import { logOut } from '@store/Auth';
+import { logOut } from '../../../@store/Auth';
 const mapStateToProps = createStructuredSelector({
 });
 

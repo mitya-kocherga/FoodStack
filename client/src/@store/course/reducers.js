@@ -1,74 +1,56 @@
-import { handleActions } from "redux-actions";
+import { handleActions } from 'redux-actions'
 
-import { firstSelectorConstructor} from "./Constructors/firstSelectorConstructor";
-import { secondSelectorConstructor} from "./Constructors/secondSelectorConstructor";
-import { Course} from "./Constructors/Course";
-import { changeSelectorAction, changeSelectorSecondAction, addSelectorAction, addSecondSelectorAction } from "../course"
+import { Course } from './Course'
+import {
+  setOptionAction,
+  addCoursesAction,
+  deleteItemFromOrderAction,
+} from '../course'
 
-const changeSelectorActionHandler = (state, { payload }) => {
-  const newRows = state.firstCourses.selectors;
-  newRows[payload.id].value = payload.value;
-
+const setOptionActionHandler = (state, { payload }) => {
   return {
     ...state,
-    firstCourses: {
-      ...state.firstCourses,
-      selectors: newRows
-    }
-  } ;
-}
-
-const changeSelectorSecondActionHandler = (state, { payload }) => {
-   const newRowsSec = state.secondCourses.selectors;
-   newRowsSec[payload.id].value = payload.value;
-
-   return {
-    ...state,
-    secondCourses: {
-      ...state.secondCourses,
-      selectors: newRowsSec
-    }
-  } ;
-}
-
-const addSelectorActionHandler = state => {
-  const sel = new firstSelectorConstructor();
-
-    return {
-      ...state,
-      firstCourses: {
-        ...state.firstCourses,
-        selectors: [
-          ...state.firstCourses.selectors,
-          sel
-        ]
-      }
-  };
-}
-
-const addSecondSelectorActionHandler = state => {
-  const sel = new secondSelectorConstructor();
-
-    return {
-      ...state,
-      secondCourses: {
-        ...state.secondCourses,
-        selectors: [
-          ...state.secondCourses.selectors,
-          sel
-        ]
-      }
-  };
-}
-
- export const dateReducer = handleActions(
-    {
-      [changeSelectorAction]: changeSelectorActionHandler,
-      [changeSelectorSecondAction]: changeSelectorSecondActionHandler,
-      [addSelectorAction]: addSelectorActionHandler,
-      [addSecondSelectorAction]: addSecondSelectorActionHandler,
-      
+    dishOptions: {
+      ...state.dishOptions,
+      firstDish: payload.firstDish,
+      secondDish: payload.secondDish,
+      salad: payload.salad,
+      dietDish: payload.dietDish,
+      desert: payload.desert
     },
-    new Course()
-  );
+    menu: {
+      ...state.menu,
+      dishes: Object.keys(payload)
+    }
+  }
+};
+
+const addCoursesToOrderHandler = (state, { payload }) => {
+  return {
+    ...state,
+    orderedCourses: [
+      ...state.orderedCourses,
+      payload
+    ]
+  }
+};
+
+const removeItemFromOrderHandler = (state, { payload }) => {
+  const list = state.orderedCourses.filter(order => order.name !== payload.item)
+  return {
+    ...state,
+    orderedCourses: list
+  }
+};
+
+
+
+export const courseReducer = handleActions(
+  {
+    [setOptionAction]: setOptionActionHandler,
+    [addCoursesAction]: addCoursesToOrderHandler,
+    [deleteItemFromOrderAction]: removeItemFromOrderHandler
+  },
+  new Course()
+)
   

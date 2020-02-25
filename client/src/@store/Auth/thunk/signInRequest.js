@@ -1,6 +1,6 @@
 
 import { signIn, signInSuccess, signInFail, setSigning } from '../actions';
-import { notify } from '@common/notify';
+import { notify } from '../../../@common/notify';
 
 export const signInRequest = (userName, password) => dispatch => {
     dispatch(signIn());

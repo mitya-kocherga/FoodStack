@@ -69,7 +69,7 @@ exports.addOrder = (req, res) => Сheck.auth(
     res,
     user => new Order({ userName: user.userName, userID: user.userId, choice: req.body.choice, paid: req.body.paid })
         .save()
-        .then( () => res.status(201).send({message:'Created', re: req.body}))
+        .then( () => res.status(201).send(req.body))
         .catch(err => res.status(400).send({message: 'Data is empty', error: err}))
     /**
      * позволяет добавить заказ

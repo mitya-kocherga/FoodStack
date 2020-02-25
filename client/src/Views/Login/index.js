@@ -4,8 +4,8 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 
 import Login from './Login';
-import { logInRequest } from '@store/Auth/thunk';
-import { rememberMeClick, rememberMe } from '@store/Auth';
+import { logInRequest } from '../../@store/Auth/thunk';
+import { rememberMeClick, rememberMe } from '../../@store/Auth';
 import { styles } from './styles';
 
 

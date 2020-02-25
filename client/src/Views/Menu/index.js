@@ -1,49 +1,36 @@
-import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { bindActionCreators } from "redux";
+import { withStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+import { bindActionCreators } from 'redux'
 
-import { styles } from "./styles";
-import Menu from './Menu';
+import { styles } from './styles'
+import Menu from './Menu'
 import {
-    FirstCourse,
-    SecondCourse,
-    mainCourse,
-    secondCourse,
-    changeSelectorAction,
-    changeSelectorSecondAction,
-    addSelectorAction,
-    addSecondSelectorAction,
-    firstCouresSelectors,
-    secondCouresSelectors,
-} from '@store/course';
+  setOptionAction,
+  dishesOptions,
+} from '../../@store/course'
+
+import { getOptions } from '../../@store/course/thunk';
 
 
 const mapStateToProps = createStructuredSelector({
-    FirstCourse,
-    SecondCourse,
-    mainCourse,
-    secondCourse,
-    firstCouresSelectors,
-    secondCouresSelectors
-  });
+  dishesOptions
+})
 
-  function mapDispatchToProps(dispatch) {
-    return {
-      actions: bindActionCreators(
-        {
-            changeSelectorAction,
-            changeSelectorSecondAction,
-            addSelectorAction,
-            addSecondSelectorAction
-        },
-        dispatch
-      ),
-    };
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(
+      {
+        getOptions,
+        setOptionAction,
+      },
+      dispatch
+    )
   }
+}
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(withStyles(styles, { withTheme: true })(Menu));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(Menu))
 
